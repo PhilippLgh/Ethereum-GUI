@@ -3,6 +3,7 @@
 export const globalState = {
   theme: 'light',
   alias: false,
+  time: 'block',
   navItems: [
     { label: 'Accounts', route: '/accounts', exclude: false },
     { label: 'Addresses', route: '/addresses', exclude: false },
@@ -26,6 +27,7 @@ export const globalState = {
     { name: 'network', exclude: false },
     { name: 'rpc_server', exclude: false },
     { name: 'currency', exclude: false },
+    { name: 'time', exclude: false },
     { name: 'alias', exclude: false },
     { name: 'signer', exclude: false },
     { name: 'theme', exclude: false }

@@ -50,7 +50,11 @@ class App extends Component {
     this.setState({
       ...state
     })
-    this.startPolling(state.provider)
+    // this.startPolling(state.provider)
+    const { global } = this.props
+    global.setState({
+      provider: state.provider
+    })
   }
   startPolling = (provider) => {
     let { interval, currentBlock } = this.state

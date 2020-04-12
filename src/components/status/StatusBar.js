@@ -47,7 +47,10 @@ class StatusBar extends Component {
     }
     else if(name === 'alias'){
       return <GlobalToggle key={name} label="Alias" name={"alias"} options={[true, false]} />
-    }        
+    }
+    else if(name === 'time'){
+      return <GlobalToggle key={name} label="Time" name={"time"} options={['block', 'unix']} />
+    }           
     else if(name === 'theme'){
       return <GlobalToggle key={name} label="Theme" name={"theme"} options={['light', 'dark']}  />
     } 
