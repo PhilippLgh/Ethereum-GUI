@@ -15,11 +15,13 @@ export const globalState = {
     'Logs',
     */
     { label: 'Network', route: '/network', exclude: false },
+    { label: 'Client', route: '/client', exclude: false },
     { label: 'Tools', route: '/tools', exclude: true },
     { label: 'Scripts', route: '/scripts', exclude: true },
     { label: 'Settings', route: '/settings', exclude: false },
   ],
   statusBarItems: [
+    { name: 'sync', exclude: false },
     { name: 'current_block', exclude: false },
     { name: 'state_time', exclude: false },
     { name: 'gas_price', exclude: false },

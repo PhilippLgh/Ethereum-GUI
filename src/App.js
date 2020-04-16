@@ -28,6 +28,7 @@ import { useTheme } from './Theme';
 import AddressList from './components/main/addresses/AddressList';
 import Tools from './components/main/tools/Tools';
 import Network from './components/main/network/Network';
+import Client from './components/main/client/Client';
 
 class App extends Component {
   state = {
@@ -164,6 +165,9 @@ class App extends Component {
                     </Route>
                     <Route path="/network">
                       <Network provider={provider} />
+                    </Route>
+                    <Route path="/client">
+                      <Client provider={provider} />
                     </Route>
                     <Route path="/scripts">
                       <ScriptList provider={provider} />
