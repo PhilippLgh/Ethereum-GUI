@@ -8,19 +8,23 @@ export default class BlockList extends Component {
     blocks: []
   }
   componentDidMount = async () => {
-    const { provider, start, end } = this.props
+    let { provider, start, end } = this.props
+    console.log('get blocks for range', start, end)
+    end = 100
+    this.setState({
+      isLoading: true
+    })
     const blocks = await getBlocks(provider, end, Math.max(start, 0))
     this.setState({
-      blocks: [...blocks]
+      blocks: [...blocks],
+      isLoading: false
     })
   }
   render() {
-    const { blocks } = this.state
+    let { blocks, isLoading } = this.state
     return (
-      <List className="BlockList">
-        {
-          blocks.map(block => <Block key={block.number} block={block} />)
-        }
+      <List className="BlockList" isLoading={isLoading} >
+        { blocks.map(block => <Block key={block.number} block={block} />) }
       </List>
     )
   }
