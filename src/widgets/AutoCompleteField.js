@@ -115,7 +115,7 @@ export default class AutoCompleteField extends Component {
     const box = this.userInput.getBoundingClientRect()
     this.setState({
       suggestBox: {
-        top: box.top + box.height,
+        top: box.top + box.height + 15,
         left: box.left
       }
     })
@@ -132,7 +132,7 @@ export default class AutoCompleteField extends Component {
         suggestions: []
       })
     }
-    else if (e.key === 'Tab' || e.key === 'Enter') {
+    else if (e.key === 'Tab') {
       const { value: userInput, selectedIndex } = this.state
       const suggestions = getSuggestions(userInput, this.props.options)
       const suggestion = suggestions.length > 0 ? suggestions[selectedIndex].word : ''
@@ -144,8 +144,28 @@ export default class AutoCompleteField extends Component {
       e.stopPropagation();
       e.preventDefault();
     }
+    else if(e.key === 'Enter') {
+      const { value: userInput, selectedIndex } = this.state
+      const suggestions = getSuggestions(userInput, this.props.options)
+      const suggestion = suggestions.length > 0 ? suggestions[selectedIndex].word : ''
+      if (!suggestion || suggestion === userInput) {
+        this.props.onEnter(userInput)
+      } else {
+        // user accepts suggestion (same as tab)
+        this.setState({
+          value: suggestion,
+          suggestions: [],
+          selectedIndex: 0
+        })
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    }
     else if (e.key === 'ArrowUp') {
       let { selectedIndex, suggestions } = this.state
+      if (suggestions.length === 0) {
+        return
+      }
       this.setState({
         selectedIndex: (selectedIndex - 1) >= 0 ? selectedIndex - 1 : (suggestions.length - 1)
       })
@@ -154,6 +174,9 @@ export default class AutoCompleteField extends Component {
     }
     else if (e.key === 'ArrowDown') {
       let { selectedIndex, suggestions } = this.state
+      if (suggestions.length === 0) {
+        return
+      }
       this.setState({
         selectedIndex: (selectedIndex + 1) % suggestions.length
       })

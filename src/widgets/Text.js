@@ -3,7 +3,7 @@ import { withGlobalState } from '../Context'
 
 class Text extends Component {
   render() {
-    const { global } = this.props
+    // const { global } = this.props
     let { text } = this.props
     if (typeof this.props.children === 'string') {
       text = this.props.children

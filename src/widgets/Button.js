@@ -5,16 +5,24 @@ import Text from './Text'
 
 class Button extends Component {
   render() {
-    const { style, global } = this.props
+    const { style, global, enabled= true } = this.props
     const theme = useTheme(global)
     return (
-      <button style={{
-        paddingTop: 3,
-        paddingBottom: 3,
-        ...style,
-        backgroundColor: 'transparent',
-        color: theme.foreground
-      }} onClick={this.props.onClick}>{this.props.children || <Text>{this.props.label}</Text>}</button>
+      <button 
+        style={{
+          paddingTop: 3,
+          paddingBottom: 3,
+          ...style,
+          backgroundColor: 'transparent',
+          color: theme.foreground,
+        }}
+        disabled={!enabled}
+        onClick={this.props.onClick}
+      >
+        <span style={{
+          opacity: enabled ? 1 : 0.25
+        }}>{this.props.children || <Text>{this.props.label}</Text>}</span>
+      </button>
     )
   }
 }

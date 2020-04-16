@@ -18,16 +18,16 @@ class Address extends Component {
   render() {
     let { address, short = false, contract = false, style = {}, label, global } = this.props
     const useAlias = global.state.alias
-    if (useAlias) {
-      const aliases = global.state.aliases
-      address = address in aliases ? aliases[address] : address
-    }
-    else if (short) {
+    if (short) {
       address = [
         ...address.split('').slice(0, 7),
         '...',
         ...address.split('').slice(42 - 5)
       ].join('')
+    }
+    if (useAlias) {
+      const aliases = global.state.aliases
+      address = address in aliases ? aliases[address] : address
     }
     return (
       <Fragment>
@@ -36,7 +36,7 @@ class Address extends Component {
           onClick={this.handleClick}
           style={{
             ...style,
-            backgroundColor: contract ? '#0095ff14' : style.backgroundColor
+            fontWeight: contract ? 'bold' : 'normal',
           }}
         >
           <span>

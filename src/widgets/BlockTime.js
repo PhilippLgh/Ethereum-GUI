@@ -8,7 +8,7 @@ class BlockTime extends Component {
     block: undefined,
     error: undefined
   }
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     const { block: blockNumber, global } = this.props
     const { state: globalState } = global
     const { provider } = globalState
@@ -35,8 +35,10 @@ class BlockTime extends Component {
       <Clickable style={{
         ...this.props.style
       }}>
-        { !error && globalState.time === 'block' ?  blockTime : <DateField ts={blockTime} /> }
-        { error && <span>{"<error>"}</span>}
+        { error
+          ? <span>{error.message}</span>
+          : globalState.time === 'block' ?  `#${blockTime}` : <DateField ts={blockTime} />
+        }
       </Clickable>
     )
   }
