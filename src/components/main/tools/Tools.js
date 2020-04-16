@@ -2,24 +2,7 @@ import React, { Component } from 'react'
 import Container from '../../../widgets/Container'
 import { Row } from '../../../widgets/Row'
 import { utils } from 'ethers'
-
-class LabeledForm extends Component {
-  render() {
-    return (
-      <div className="card" style={{
-        backgroundColor: '#f3f3f34d',
-        width: 500,
-        height: 300,
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 20,
-        borderRadius: 20
-      }}>
-        { this.props.children }
-      </div>
-    )
-  }
-}
+import LabeledForm from '../../../widgets/LabeledForm'
 
 class InputField extends Component {
   render() {
@@ -71,7 +54,6 @@ export default class Tools extends Component {
           <Row>
             <Converter />
             {/* next contract address calculator + lurch support */}
-            <span></span>
             <span></span>
             <span></span>
           </Row>
