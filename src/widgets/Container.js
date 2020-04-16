@@ -21,7 +21,7 @@ class Container extends Component {
         borderRadius: 10,
         ...style
       }}>
-        {header && <ContainerHeader title={header} /> }
+        {header && <ContainerHeader style={this.props.headerStyle} title={header} /> }
         { this.props.children }
       </div>
     )

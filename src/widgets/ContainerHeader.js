@@ -8,7 +8,8 @@ export default class ContainerHeader extends Component {
     return (
       <Row style={{
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        ...this.props.style
       }}>
         <BackButton />
         <span style={{
