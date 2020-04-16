@@ -6,7 +6,8 @@ export default class Tabs extends Component {
     selectedTab: 0
   }
   render() {
-    const { selectedTab } = this.state
+    let { selectedTab } = this.state
+    selectedTab = this.props.selectedTab || selectedTab
     let { children } = this.props
     if (!Array.isArray(children)) {
       children = [children]
@@ -18,6 +19,7 @@ export default class Tabs extends Component {
         flex: 1,
       }}>
         <Row style={{ justifyContent: 'normal' }}>{children.map((c, idx) => <div
+          key={idx}
           style={{ 
             margin: 5, 
             fontWeight: 'bold',
