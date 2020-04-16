@@ -28,11 +28,26 @@ export default class Console extends Component {
   handleBlur = () => {
     this.autoCompleteField.blur();
   }
+  handleEnter = async (input) => {
+    console.log('process input', input)
+    const { context = {} } = this.props
+    // eslint-disable-next-line
+    const contract = context['contract1']
+    try {
+      // eslint-disable-next-line
+      const result = await eval(`contract.${input}`)
+      this.setState({ result, error: undefined })
+    } catch (error) {
+      console.log('error', error)
+      this.setState({ error })
+    }
+  }
   render() {
+    const { result, error } = this.state
     const { context = {} } = this.props
     const flattened = flattenObject(context['contract1'])
-    const options = Object.keys(flattened)
-    console.log('options', options)
+    const options = Object.keys(flattened).filter(el => !el.includes('.'))
+    // console.log('options', options)
     return (
       <div
         tabIndex={0}
@@ -40,6 +55,10 @@ export default class Console extends Component {
           backgroundColor: 'rgb(39, 40, 34)',
           height: 100,
           width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          ...this.props.style
         }}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
@@ -54,16 +73,30 @@ export default class Console extends Component {
             ref={(autoComplete) => { this.autoCompleteField = autoComplete; }}
             fontSize={14}
             options={options}
+            onEnter={this.handleEnter}
+            style={{
+              color: '#ffffffb8'
+            }}
           />
         </Row>
+        {error &&
         <span style={{
           fontWeight: 'bold',
           fontSize: '1rem',
-          color: 'red',
+          color: '#da4747c9',
           padding: 5,
-          marginTop: 25,
-          visibility: 'hidden'
-        }}>Error: foo bar baz!</span>
+          backgroundColor: '#ef565629'
+        
+        }}>Error: {error.message}</span>
+        }
+        {!error && result &&  <div style={{
+          padding: 5,
+          color: '#ffffff6b',
+          maxWidth: '100%',
+          wordWrap: 'break-word',
+          overflowY: 'scroll'
+        }}> {"<- " + JSON.stringify(result, null, 2)}</div>}
+
       </div>
     )
   }
