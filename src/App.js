@@ -27,6 +27,7 @@ import Text from './widgets/Text';
 import { useTheme } from './Theme';
 import AddressList from './components/main/addresses/AddressList';
 import Tools from './components/main/tools/Tools';
+import Network from './components/main/network/Network';
 
 class App extends Component {
   state = {
@@ -160,6 +161,9 @@ class App extends Component {
                     </Route>
                     <Route path="/contracts">
                       <Contracts provider={provider} />
+                    </Route>
+                    <Route path="/network">
+                      <Network provider={provider} />
                     </Route>
                     <Route path="/scripts">
                       <ScriptList provider={provider} />

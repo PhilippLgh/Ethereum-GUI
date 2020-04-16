@@ -13,8 +13,8 @@ export const globalState = {
     /*
     'Events',
     'Logs',
-    'Network'
     */
+    { label: 'Network', route: '/network', exclude: false },
     { label: 'Tools', route: '/tools', exclude: true },
     { label: 'Scripts', route: '/scripts', exclude: true },
     { label: 'Settings', route: '/settings', exclude: false },
