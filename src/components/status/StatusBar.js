@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import CurrentBlockNumber from './StatusItems/CurrentBlockNumber'
 import GasPrice from './StatusItems/GasPrice'
-import GasLimit from './StatusItems/GasLimit'
+// import GasLimit from './StatusItems/GasLimit'
 import HardforkName from './StatusItems/HardforkName'
 import NetworkId from './StatusItems/NetworkId'
 import RpcServer from './StatusItems/RpcServer'
@@ -11,6 +11,7 @@ import StateTime from './StatusItems/StateTime'
 import { withGlobalState } from '../../Context'
 import { useTheme } from '../../Theme'
 import GlobalToggle from './GlobalToggle'
+import Syncing from './StatusItems/Syncing'
 
 
 
@@ -20,6 +21,9 @@ class StatusBar extends Component {
     if (exclude) {
       return
     }
+    if (name === 'sync') {
+      return <Syncing key={name} provider={provider} block={this.props.currentBlock} />
+    } 
     if (name === 'current_block') {
       return <CurrentBlockNumber key={name} provider={provider} block={this.props.currentBlock} />
     } 
