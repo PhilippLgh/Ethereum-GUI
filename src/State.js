@@ -14,8 +14,8 @@ export const globalState = {
     'Events',
     'Logs',
     'Network'
-    'Tools'
     */
+    { label: 'Tools', route: '/tools', exclude: true },
     { label: 'Scripts', route: '/scripts', exclude: true },
     { label: 'Settings', route: '/settings', exclude: false },
   ],

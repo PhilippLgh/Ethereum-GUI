@@ -26,6 +26,7 @@ import { withNewContext, withGlobalState } from './Context'
 import Text from './widgets/Text';
 import { useTheme } from './Theme';
 import AddressList from './components/main/addresses/AddressList';
+import Tools from './components/main/tools/Tools';
 
 class App extends Component {
   state = {
@@ -142,7 +143,7 @@ class App extends Component {
                     <Route path="/blocks">
                       <BlockList provider={provider} start={0} end={currentBlock} />
                     </Route>
-                    <Route path="/transactions/new" exact={true} >
+                    <Route path="/transactions/new/:from" exact={true} >
                       <SendTransaction provider={provider} />
                     </Route>
                     <Route path="/transactions/:hash" exact={true} >
@@ -162,6 +163,9 @@ class App extends Component {
                     </Route>
                     <Route path="/scripts">
                       <ScriptList provider={provider} />
+                    </Route>
+                    <Route path="/tools">
+                      <Tools provider={provider} />
                     </Route>
                     <Route path="/settings">
                       <Settings provider={provider} />
