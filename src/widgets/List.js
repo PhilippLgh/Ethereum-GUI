@@ -11,29 +11,46 @@ export default class List extends Component {
   state = {
     items: [],
     isLoading: false,
-    error: undefined
+    error: undefined,
+    intervalHandler: undefined
   }
   componentDidMount = async () => {
-    const { loadItems } = this.props
+    const { loadItems, polling } = this.props
     if (loadItems) {
-      this.setState({
-        isLoading: true
-      })
-      try {
-        let items = await loadItems()
-        // filter null and undefined
-        items = items.filter(item => !!item)
+      const _loadItems = async () => {
         this.setState({
-          items,
-          isLoading: false
+          isLoading: true
         })
-      } catch (error) {
-        console.log('loading error', error)
+        try {
+          let items = await loadItems()
+          // filter null and undefined
+          items = items.filter(item => !!item)
+          this.setState({
+            items,
+            isLoading: false
+          })
+        } catch (error) {
+          console.log('loading error', error)
+          this.setState({
+            error,
+            isLoading: false
+          })
+        }
+
+      }
+      _loadItems()
+      if (polling) {
+        const intervalHandler = setInterval(_loadItems, polling)
         this.setState({
-          error,
-          isLoading: false
+          intervalHandler
         })
       }
+    }
+  }
+  componentWillUnmount(){
+    const { intervalHandler } = this.state
+    if (intervalHandler) {
+      clearInterval(intervalHandler)
     }
   }
   renderLoading() {
@@ -59,11 +76,15 @@ export default class List extends Component {
   }
   renderHeader() {
     const { items } = this.state
+    const { elements } = this.props
     return (
       <Row style={{
         height: 50,
-        backgroundColor: 'rgba(243, 243, 243, 0.1)'
+        backgroundColor: 'rgba(243, 243, 243, 0.1)',
+        alignItems: 'center'
       }}>
+        { elements && elements() }
+
         {items.length > 25 && <Pagination />}
       </Row>
     )
@@ -85,17 +106,13 @@ export default class List extends Component {
     )
   }
   render() {
-    const { isLoading, items, error } = this.state
-    const { elements } = this.props
+    const { isLoading, error } = this.state
     return (
       <div style={{
         display: 'flex',
         flex: 1,
         flexDirection: 'column',
       }}>
-        {
-          elements && elements()
-        }
         { this.renderHeader() }
         {error
           ? <Error error={error} />
