@@ -5,37 +5,40 @@ import List from '../../../widgets/List'
 import NavButton from '../../../widgets/NavButton'
 import Button from '../../../widgets/Button'
 import Modal from '../../../widgets/Modal'
+import Container from '../../../widgets/Container'
 
 export default class Contracts extends Component {
   state = {
-    contracts: [],
     showPrompt: false
-  }
-  componentDidMount = async () => {
-    const { provider } = this.props
-    const contracts = await getAllContracts(provider)
-    this.setState({
-      contracts: [...contracts]
-    })
   }
   bookmarkContract = () => {
     this.setState({
       showPrompt: true
     })
   }
+  importContract = () => {
+    // allows to import a contract
+    // from another chain at a given block / state
+    // can be auto-synced downstream
+  }
   render() {
-    const { contracts, showPrompt } = this.state
+    const { showPrompt } = this.state
     const { provider } = this.props
     return (
-      <List elements={() => (
-        <div>
-          <NavButton to={'/contracts/new'} label="New" />
-          <Button onClick={this.bookmarkContract} label="Bookmark" />
-        </div>
-      )}>
+      <Container>
+        <List
+          elements={() => (
+            <div>
+              <NavButton to={'/contracts/new'} label="New" />
+              <Button onClick={this.bookmarkContract} label="Bookmark" />
+              <Button onClick={this.importContract} label="Import" />
+            </div>
+          )}
+          loadItems={() => getAllContracts(provider)}
+          renderItem={contract => <ContractListItem provider={provider} key={contract.address} contract={contract} />}
+        />
         <Modal onClose={() => this.setState({ showPrompt: false })} show={showPrompt} />
-        {contracts.map(contract => <ContractListItem provider={provider} key={contract} contract={contract} />)}
-      </List>
+      </Container>
     )
   }
 }

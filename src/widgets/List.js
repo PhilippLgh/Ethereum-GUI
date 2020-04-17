@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Pagination from './Pagination'
 import Spinner from './Spinner'
 import Error from './Error'
+import { Row } from './Row'
 
 // TODO implement list header
 class ListHeader extends Component { }
@@ -49,23 +50,34 @@ export default class List extends Component {
           alignSelf: 'center',
           margin: 20
         }}>Loading items...</div>
-       <Spinner style={{
-         width: 50,
-         height: 50
-       }} />
+        <Spinner style={{
+          width: 50,
+          height: 50
+        }} />
       </div>
+    )
+  }
+  renderHeader() {
+    const { items } = this.state
+    return (
+      <Row style={{
+        height: 50,
+        backgroundColor: 'rgba(243, 243, 243, 0.1)'
+      }}>
+        {items.length > 25 && <Pagination />}
+      </Row>
     )
   }
   renderItems() {
     const { items } = this.state
-    const { style, renderItem, itemName = "items" } = this.props
+    const { style, renderItem = () => { }, itemName = "items" } = this.props
     return (
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
       }}>
-        { items.length > 0
+        {items.length > 0
           ? items.map(renderItem)
           : <h2 style={{ alignSelf: 'center', color: '#ccc' }}>No {itemName} found</h2>
         }
@@ -84,10 +96,10 @@ export default class List extends Component {
         {
           elements && elements()
         }
-        {items.length > 25 && <Pagination />}
+        { this.renderHeader() }
         {error
-        ? <Error error={error}/>
-        : isLoading ? this.renderLoading() : this.renderItems()
+          ? <Error error={error} />
+          : isLoading ? this.renderLoading() : this.renderItems()
         }
       </div>
     )
