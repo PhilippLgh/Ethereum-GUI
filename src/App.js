@@ -1,34 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import { ethers } from 'ethers';
-import BlockList from './components/main/blocks/BlockList';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink
 } from "react-router-dom"
-import TransactionList from './components/main/transactions/TransactionList';
+import TopNavigation from './components/navigation/TopNavigation';
 import StatusBar from './components/status/StatusBar';
-import AccountsList from './components/main/accounts/AccountsList';
-import Contracts from './components/main/contracts/Contracts';
-import { Row } from './widgets/Row';
-import CreateContractView from './components/main/contracts/CreateContractView';
-import AccountDetails from './components/main/accounts/AccountDetails';
-import ContractDetails from './components/main/contracts/ContractDetails';
-import SendTransaction from './components/main/transactions/SendTransaction';
-import BlockDetails from './components/main/blocks/BlockDetails';
-import TransactionDetails from './components/main/transactions/TransactionDetails';
-import ScriptList from './components/main/scripts/ScriptList';
 import Error from './widgets/Error';
-import Settings from './components/main/settings/Settings';
+import { Row } from './widgets/Row';
 import { withNewContext, withGlobalState } from './Context'
-import Text from './widgets/Text';
 import { useTheme } from './Theme';
-import AddressList from './components/main/addresses/AddressList';
-import Tools from './components/main/tools/Tools';
-import Network from './components/main/network/Network';
-import Client from './components/main/client/Client';
+import Routes from './Routes';
+import NoConnection from './widgets/NoConnection';
+
+
 
 class App extends Component {
   state = {
@@ -43,7 +28,7 @@ class App extends Component {
       // const provider = new ethers.providers.InfuraProvider()
       // ./geth --dev --rpc --rpccorsdomain="*" --rpcapi "eth,web3,personal,net,debug" --allow-insecure-unlock
       state.provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
-      state.currentBlock = await state.provider.getBlockNumber()
+      // state.currentBlock = await state.provider.getBlockNumber()
     } catch (error) {
       return this.setState({
         error
@@ -97,31 +82,7 @@ class App extends Component {
           <Row style={{ padding: 3 }}>
             <span style={{ color: '#939393' }}>Ethereum GUI v1.0.0</span>
           </Row>
-          <nav className="TopNav" style={{
-              backgroundColor: theme.topNav.backgroundColor,
-              padding: 5,
-              display: 'flex',
-              justifyContent: 'left',
-              borderBottom: '1px solid #c5c5c5'
-          }}>
-            {navItems.map(({ route, label }) => {
-              return (
-                <div className="NavItem" key={route} style={{
-                  padding: 10,
-                  fontWeight: 200,
-                  fontSize: '1.25rem',
-                  marginLeft: 10,
-                  marginRight: 10
-                }}>
-                  <NavLink to={route} activeClassName="ActiveNav" style={{
-                    color: theme.topNav.item.color,
-                    textDecoration: 'none',
-                    padding: 5
-                  }}><Text>{label}</Text></NavLink>
-                </div>
-              )
-            })}
-          </nav>
+          <TopNavigation items={navItems} />
           {
             provider && <StatusBar provider={provider} currentBlock={currentBlock} />
           }
@@ -129,56 +90,7 @@ class App extends Component {
             provider
               ? (
                 <main>
-                  <Switch>
-                    <Route path="/accounts/:address">
-                      <AccountDetails provider={provider} />
-                    </Route>
-                    <Route path="/accounts">
-                      <AccountsList provider={provider} />
-                    </Route>
-                    <Route path="/addresses">
-                      <AddressList provider={provider} />
-                    </Route>
-                    <Route path="/blocks/:number">
-                      <BlockDetails provider={provider} />
-                    </Route>
-                    <Route path="/blocks">
-                      <BlockList provider={provider} start={0} end={currentBlock} />
-                    </Route>
-                    <Route path="/transactions/new/:from" exact={true} >
-                      <SendTransaction provider={provider} />
-                    </Route>
-                    <Route path="/transactions/:hash" exact={true} >
-                      <TransactionDetails provider={provider} />
-                    </Route>
-                    <Route path="/transactions">
-                      <TransactionList provider={provider} blockNumber={currentBlock} />
-                    </Route>
-                    <Route path="/contracts/new" exact={true} >
-                      <CreateContractView provider={provider} />
-                    </Route>
-                    <Route path="/contracts/:address">
-                      <ContractDetails provider={provider} />
-                    </Route>
-                    <Route path="/contracts">
-                      <Contracts provider={provider} />
-                    </Route>
-                    <Route path="/network">
-                      <Network provider={provider} />
-                    </Route>
-                    <Route path="/client">
-                      <Client provider={provider} />
-                    </Route>
-                    <Route path="/scripts">
-                      <ScriptList provider={provider} />
-                    </Route>
-                    <Route path="/tools">
-                      <Tools provider={provider} />
-                    </Route>
-                    <Route path="/settings">
-                      <Settings provider={provider} />
-                    </Route>
-                  </Switch>
+                  <Routes provider={provider} currentBlock={currentBlock} />
                 </main>
               )
               : (error ? <Error error={error} /> : <span>Waiting for provider</span>)
