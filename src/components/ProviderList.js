@@ -11,7 +11,6 @@ class ProviderList extends Component {
     const { global, className, elements, itemName, loadItems, renderItem } = this.props
     const { state } = global
     const { provider } = state
-    console.log('render provider list', provider.connection.url)
     return (
       <List 
         className={className}
