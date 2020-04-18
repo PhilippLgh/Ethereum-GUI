@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import List from '../../../widgets/List'
 import AddressItem from './AddressListItem'
 import { getAllAddresses } from '../../../js/utils'
 import Container from '../../../widgets/Container'
+import ProviderList from '../../ProviderList'
 
 export default class AddressList extends Component {
   render() {
-    const { provider } = this.props
     return (
       <Container>
-        <List 
+        <ProviderList
           className="AddressList"
           itemName="Addresses"
-          loadItems={() => getAllAddresses(provider)}
-          renderItem={address => <AddressItem key={address} provider={provider} address={address} />}
+          loadItems={provider => getAllAddresses(provider)}
+          renderItem={({ provider, item: address}) => <AddressItem key={address} provider={provider} address={address} />}
         />
       </Container>
     )

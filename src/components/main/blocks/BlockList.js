@@ -1,22 +1,20 @@
 import React, { Component } from 'react'
 import Block from './BlockListItem'
-import List from '../../../widgets/List'
 import { getBlocks } from '../../../js/utils'
 import Container from '../../../widgets/Container'
+import ProviderList from '../../ProviderList'
 
 export default class BlockList extends Component {
   render() {
-    let { provider, start, end } = this.props
+    let { start, end } = this.props
     end = 100
     return (
       <Container>
-        <List 
+        <ProviderList
           className="BlockList"
           itemName="Blocks"
-          loadItems={
-            () => getBlocks(provider, end, Math.max(start, 0))
-          }
-          renderItem={ block => <Block key={block.number} block={block} /> }
+          loadItems={provider => getBlocks(provider, end, Math.max(start, 0))}
+          renderItem={({ provider, item: block}) => <Block key={block.number} block={block} /> }
         />
       </Container>
     )

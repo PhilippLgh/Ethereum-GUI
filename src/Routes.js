@@ -28,17 +28,17 @@ import AppliedRoute from './AppliedRoute';
 
 export default ({ provider, currentBlock }) =>
   <Switch>
-    <AppliedRoute path="/accounts/:address" component={AccountDetails} props={{ provider }} />
-    <AppliedRoute path="/accounts" component={AccountsList} props={{ provider }} />
-    <AppliedRoute path="/addresses" component={AddressList} props={{ provider }} />
+    <AppliedRoute path="/accounts/:address" component={AccountDetails} props={{ provider }}  />
+    <AppliedRoute path="/accounts" component={AccountsList} />
+    <AppliedRoute path="/addresses" component={AddressList} />
     <AppliedRoute path="/blocks/:number" component={BlockDetails} props={{ provider }} />
-    <AppliedRoute path="/blocks" component={BlockList} props={{ provider, start: 0, end: currentBlock }} />
+    <AppliedRoute path="/blocks" component={BlockList} props={{ start: 0, end: currentBlock }} />
     <AppliedRoute path="/transactions/new/:from" component={SendTransaction} props={{ provider }} />
     <AppliedRoute path="/transactions/:hash" component={TransactionDetails} props={{ provider }} />
-    <AppliedRoute path="/transactions" component={TransactionList} props={{ provider, blockNumber: currentBlock }} />
+    <AppliedRoute path="/transactions" component={TransactionList} props={{ blockNumber: currentBlock }} />
     <AppliedRoute path="/contracts/new" component={CreateContractView} props={{ provider }} />
     <AppliedRoute path="/contracts/:address" component={ContractDetails} props={{ provider }} />
-    <AppliedRoute path="/contracts" component={Contracts} props={{ provider }} />
+    <AppliedRoute path="/contracts" component={Contracts} />
     <AppliedRoute path="/network" component={Network} props={{ provider }} />
     <AppliedRoute path="/client" component={Client} props={{ provider }} />
     <AppliedRoute path="/workflows/jobs/:jobId" component={JobDetails} props={{ provider }} />

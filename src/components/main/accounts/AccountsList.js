@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import AccountItem from './AccountListItem'
-import List from '../../../widgets/List'
 import Button from '../../../widgets/Button'
 import { createFundedTestAccount } from '../../../js/utils'
 import Container from '../../../widgets/Container'
+import ProviderList from '../../ProviderList'
 
 export default class AccountsList extends Component {
   addAccount = async () => {
@@ -14,10 +14,9 @@ export default class AccountsList extends Component {
     */
   }
   render() {
-    const { provider } = this.props
     return (
       <Container>
-        <List
+        <ProviderList
           className="AccountList"
           elements={() => (
             <div>
@@ -25,8 +24,9 @@ export default class AccountsList extends Component {
               <Button onClick={this.loadAccounts} >refresh</Button>
             </div>
           )}
-          loadItems={() => provider.listAccounts()}
-          renderItem={address => <AccountItem key={address} provider={provider} address={address} /> }
+          itemName="accounts"
+          loadItems={(provider) => provider.listAccounts()}
+          renderItem={({ provider, item: address }) => <AccountItem key={address} provider={provider} address={address} /> }
         />
       </Container>
     )
