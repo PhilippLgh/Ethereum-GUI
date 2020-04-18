@@ -5,52 +5,73 @@ import Error from './Error'
 import { Row } from './Row'
 
 // TODO implement list header
-class ListHeader extends Component { }
+// class ListHeader extends Component { }
 
 export default class List extends Component {
   state = {
     items: [],
     isLoading: false,
     error: undefined,
-    intervalHandler: undefined
+    intervalHandler: undefined,
+    dataSource: undefined
   }
   componentDidMount = async () => {
-    const { loadItems, polling } = this.props
-    if (loadItems) {
-      const _loadItems = async () => {
-        this.setState({
-          isLoading: true
-        })
-        try {
-          let items = await loadItems()
-          // filter null and undefined
-          items = items.filter(item => !!item)
-          this.setState({
-            items,
-            isLoading: false
-          })
-        } catch (error) {
-          console.log('loading error', error)
-          this.setState({
-            error,
-            isLoading: false
-          })
-        }
-
-      }
-      _loadItems()
-      if (polling) {
-        const intervalHandler = setInterval(_loadItems, polling)
-        this.setState({
-          intervalHandler
-        })
-      }
+    const { polling, dataSource } = this.props
+    this.setState({
+      dataSource
+    })
+    this.loadItems()
+    if (polling) {
+      this.startPolling(polling)
     }
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
+    this.stopPolling()
+  }
+  loadItems = async () => {
+    const { loadItems = () => undefined, items: providedItems = [] } = this.props
+    this.setState({
+      isLoading: true
+    })
+    try {
+      let items = (await loadItems()) || providedItems
+      // filter null and undefined
+      items = items.filter(item => !!item)
+      this.setState({
+        items,
+        isLoading: false
+      })
+    } catch (error) {
+      console.log('loading error', error)
+      this.setState({
+        error,
+        isLoading: false
+      })
+    }
+  }
+  startPolling = (interval) => {
+    const intervalHandler = setInterval(this.loadItems, interval)
+    this.setState({
+      intervalHandler
+    })
+  }
+  stopPolling = () => {
     const { intervalHandler } = this.state
     if (intervalHandler) {
       clearInterval(intervalHandler)
+    }
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.dataSource !== prevState.dataSource) {
+      return { dataSource: nextProps.dataSource }
+    }
+    return null
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.dataSource !== this.props.dataSource ){
+      console.log('data source changed in list', this.props.dataSource)
+      this.loadItems()
+      // TODO handle polling here
     }
   }
   renderLoading() {
@@ -83,7 +104,7 @@ export default class List extends Component {
         backgroundColor: 'rgba(243, 243, 243, 0.1)',
         alignItems: 'center'
       }}>
-        { elements && elements() }
+        {elements && elements()}
 
         {items.length > 25 && <Pagination />}
       </Row>
@@ -107,13 +128,16 @@ export default class List extends Component {
   }
   render() {
     const { isLoading, error } = this.state
+    const { header = true } = this.props
     return (
-      <div style={{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-      }}>
-        { this.renderHeader() }
+      <div
+        className="List"
+        style={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+        }}>
+        {header && this.renderHeader()}
         {error
           ? <Error error={error} />
           : isLoading ? this.renderLoading() : this.renderItems()
