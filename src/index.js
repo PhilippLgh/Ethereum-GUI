@@ -3,10 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Resizable from './widgets/Resizable'
+import Nano from './components/nano/Nano';
+
+function Responsive({ width = window.innerWidth }) {
+  return (
+    (width <= 320)
+    ? <Nano />
+    : <App />
+  )
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Resizable>
+      <Responsive />
+    </Resizable>
   </React.StrictMode>,
   document.getElementById('root')
 );
