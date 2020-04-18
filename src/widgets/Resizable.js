@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 export default class Resizable extends Component {
   state = {
@@ -25,12 +25,9 @@ export default class Resizable extends Component {
   render() {
     const { width, height } = this.state
     return (
-      <div style={{
-        display: 'flex',
-        flex: 1
-      }}>
+      <Fragment>
         { this.props.children }
-      </div>
+      </Fragment>
     )
   }
 }
