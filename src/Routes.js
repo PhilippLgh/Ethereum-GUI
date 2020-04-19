@@ -31,10 +31,10 @@ export default ({ provider, currentBlock }) =>
     <AppliedRoute path="/accounts/:address" component={AccountDetails} props={{ provider }}  />
     <AppliedRoute path="/accounts" component={AccountsList} />
     <AppliedRoute path="/addresses" component={AddressList} />
-    <AppliedRoute path="/blocks/:number" component={BlockDetails} props={{ provider }} />
+    <AppliedRoute path="/blocks/:blockNumber" component={BlockDetails} props={{ provider }} />
     <AppliedRoute path="/blocks" component={BlockList} props={{ start: 0, end: currentBlock }} />
     <AppliedRoute path="/transactions/new/:from" component={SendTransaction} props={{ provider }} />
-    <AppliedRoute path="/transactions/:hash" component={TransactionDetails} props={{ provider }} />
+    <AppliedRoute path="/transactions/:txHash" component={TransactionDetails} props={{ provider }} />
     <AppliedRoute path="/transactions" component={TransactionList} props={{ blockNumber: currentBlock }} />
     <AppliedRoute path="/contracts/new" component={CreateContractView} props={{ provider }} />
     <AppliedRoute path="/contracts/:address" component={ContractDetails} props={{ provider }} />
