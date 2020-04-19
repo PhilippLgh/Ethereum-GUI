@@ -7,10 +7,10 @@ import Connectivity from '../../../widgets/Connectivity'
 
 export default class BlockList extends Component {
   render() {
-    const latestBlock = 2000
-    // let { start, end } = this.props
-    let end = latestBlock
-    let start = Math.max(latestBlock - 100, 0)
+    const latestBlock = undefined
+    let { start, end } = this.props
+    end = latestBlock || end
+    start = Math.max(end - 100, 0)
     return (
       <Connectivity>
         <Container>
