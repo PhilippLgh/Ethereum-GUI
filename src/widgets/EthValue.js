@@ -18,7 +18,6 @@ const weiTo = (wei, selectedCurrency) => {
 }
 
 const weiToUnit = (wei, unit) => {
-  console.log('transform', wei, unit)
   return ethers.utils.formatUnits(wei, unit) // as string
 }
 
@@ -40,7 +39,7 @@ export default class EthValue extends Component {
 
     let valueString = ''
     if (unit) {
-      valueString = weiToUnit(wei, unit).replace('.0', '') + ' ' + unit
+      valueString = weiToUnit(wei, unit).replace('.0', '') + ' ' + unit.toUpperCase()
     } else {
       valueString = weiTo(wei, selectedCurrency) + ' ' +  selectedCurrency.toUpperCase()
     }
