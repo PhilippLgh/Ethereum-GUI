@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { ethers } from 'ethers';
+import { ethers, providers } from 'ethers';
 import {
   BrowserRouter as Router,
 } from "react-router-dom"
@@ -11,37 +11,53 @@ import { Row } from './widgets/Row';
 import { withNewContext, withGlobalState } from './Context'
 import { useTheme } from './Theme';
 import Routes from './Routes';
-import NoConnection from './widgets/NoConnection';
 
-
+const createProvider = (selectedProvider, providers) => {
+  const providerConfig = providers.find(p => p.name === selectedProvider)
+  const { url, name } = providerConfig
+  let newProvider
+  if (url === 'web3') {
+    newProvider = new ethers.providers.Web3Provider(window.web3.currentProvider)
+  } else {
+    newProvider = new ethers.providers.JsonRpcProvider(`http://${url}`)
+  }
+  return newProvider
+}
 
 class App extends Component {
   state = {
-    provider: undefined,
     currentBlock: 0,
     interval: undefined
   }
   componentDidMount = async () => {
-    // initial state
-    const state = {}
-    try {
-      // const provider = new ethers.providers.InfuraProvider()
-      // ./geth --dev --rpc --rpccorsdomain="*" --rpcapi "eth,web3,personal,net,debug" --allow-insecure-unlock
-      state.provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
-      // state.currentBlock = await state.provider.getBlockNumber()
-    } catch (error) {
-      return this.setState({
-        error
-      })
+    this.tryConnect()
+  }
+  tryConnect = () => {
+    let { interval } = this.state
+    if (interval) {
+      return
     }
-    // const provider = new ethers.providers.JsonRpcProvider('http://localhost:7545')
+    interval = setInterval(async () => {
+      const { global } = this.props
+      const { state: globalState } = global
+      let { provider, isConnected, selectedProvider, providers } = globalState
+      provider = provider || createProvider(selectedProvider, providers)
+      try {
+        const block = await provider.getBlockNumber()
+        // network cannot be used to check - seems to get cached
+        // const network = await provider.getNetwork()
+        if (block && !isConnected) {
+          global.setState({ isConnected: true, provider: provider })
+        }
+      } catch (error) {
+        // console.log('error', error)
+        if (isConnected) {
+          global.setState({ isConnected: false  })
+        }
+      }
+    }, 2000)
     this.setState({
-      ...state
-    })
-    // this.startPolling(state.provider)
-    const { global } = this.props
-    global.setState({
-      provider: state.provider
+      interval,
     })
   }
   startPolling = (provider) => {
@@ -69,7 +85,9 @@ class App extends Component {
     const { state: globalState } = this.props.global
     const theme = useTheme(this.props.global)
     const navItems = globalState.navItems.filter(item => !item.exclude)
-    const { provider, currentBlock, error } = this.state
+    const { currentBlock, error } = this.state
+    const { provider } = globalState
+
     return (
       <Router>
         <div className="App" style={{
@@ -83,17 +101,14 @@ class App extends Component {
             <span style={{ color: '#939393' }}>Ethereum GUI v1.0.0</span>
           </Row>
           <TopNavigation items={navItems} />
-          {
-            provider && <StatusBar provider={provider} currentBlock={currentBlock} />
-          }
-          {
-            provider
-              ? (
-                <main>
-                  <Routes provider={provider} currentBlock={currentBlock} />
-                </main>
-              )
-              : (error ? <Error error={error} /> : <span>Waiting for provider</span>)
+          <StatusBar provider={provider} currentBlock={currentBlock} />
+          {error
+            ? <Error error={error} />
+            : (
+              <main>
+                <Routes provider={provider} currentBlock={currentBlock} />
+              </main>
+            )
           }
         </div>
       </Router>
