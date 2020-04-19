@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
 import StatusItem from '../StatusItem'
+import { withGlobalState } from '../../../Context'
 
-export default class NetworkId extends Component {
+class Network extends Component {
   state = {
-    network: undefined
+    networkId: 'no network',
+    networkName: ''
   }
   componentDidMount = async () => {
     const { provider } = this.props
-    const network = await provider.getNetwork() 
-    this.setState({
-      network
-    })
+    try {
+      const network = await provider.getNetwork() 
+      console.log('network', network)
+      const { chainId: networkId, name: networkName } = network
+      this.setState({
+        networkId,
+        networkName
+      }) 
+    } catch (error) {
+      // reset
+      this.setState({
+        networkId: 'no network',
+        networkName: ''
+      }) 
+    }
   }
   render() {
-    const { network } = this.state
+    const { global } = this.props
+    const { state: globalState } = global
+    const { isConnected } = globalState
+    const { networkId, networkName } = this.state
     return (
-      <StatusItem label="Network" value={network && `${network.chainId} ("${network.name}")` } />
+      <StatusItem label="Network" value={isConnected ? `${networkId} ${networkName ? `(${networkName})` : ''}` : 'offline' } />
     )
   }
 }
+
+export default withGlobalState(Network)

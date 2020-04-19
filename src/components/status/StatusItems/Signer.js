@@ -8,11 +8,17 @@ export default class Signer extends Component {
   }
   componentDidMount = async () => {
     const { provider } = this.props
-    const signer = await provider.getSigner()
-    const address = await signer.getAddress()
-    this.setState({
-      address
-    })
+    try {
+      const signer = await provider.getSigner()
+      const address = await signer.getAddress()
+      this.setState({
+        address
+      })
+    } catch (error) {
+      this.setState({
+        address: ''
+      })
+    }
   } 
   render() {
     const { address } = this.state

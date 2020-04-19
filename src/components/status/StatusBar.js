@@ -13,50 +13,52 @@ import { useTheme } from '../../Theme'
 import GlobalToggle from './GlobalToggle'
 import Syncing from './StatusItems/Syncing'
 
-
-
 class StatusBar extends Component {
   renderItem = (item, provider) => {
+    const { createdAt } = provider || { createdAt: 'not_set' }
     const { name, exclude } = item
+    // this is a trick: detect if the provider instance has changed
+    // it will trigger a re-mount on all status items
+    const key = name+'_'+createdAt
     if (exclude) {
       return
     }
     if (name === 'sync') {
-      return <Syncing key={name} provider={provider} block={this.props.currentBlock} />
+      return <Syncing key={key} provider={provider} block={this.props.currentBlock} />
     } 
     if (name === 'current_block') {
-      return <CurrentBlockNumber key={name} provider={provider} block={this.props.currentBlock} />
+      return <CurrentBlockNumber key={key} provider={provider} block={this.props.currentBlock} />
     } 
     else if(name === 'state_time'){
-      return <StateTime key={name} />
+      return <StateTime key={key} />
     }
     else if(name === 'gas_price'){
-      return <GasPrice key={name} provider={provider} />
+      return <GasPrice key={key} provider={provider} />
     }
     /* <GasLimit provider={provider} /> */ 
     else if(name === 'hardfork'){
-      return <HardforkName key={name} provider={provider} />
+      return <HardforkName key={key} provider={provider} />
     }
     else if(name === 'network'){
-      return <NetworkId key={name} provider={provider} />
+      return <NetworkId key={key} provider={provider} />
     }
     else if(name === 'rpc_server'){
-      return <RpcServer key={name} provider={provider} />
+      return <RpcServer key={key} provider={provider} />
     }  
     else if(name === 'currency'){
-      return <Currency key={name}/>
+      return <Currency key={key}/>
     }  
     else if(name === 'signer'){
-      return <Signer key={name} provider={provider}/>
+      return <Signer key={key} provider={provider}/>
     }
     else if(name === 'alias'){
-      return <GlobalToggle key={name} label="Alias" name={"alias"} options={[true, false]} />
+      return <GlobalToggle key={key} label="Alias" name={"alias"} options={[true, false]} />
     }
     else if(name === 'time'){
-      return <GlobalToggle key={name} label="Time" name={"time"} options={['block', 'unix']} />
+      return <GlobalToggle key={key} label="Time" name={"time"} options={['block', 'unix']} />
     }           
     else if(name === 'theme'){
-      return <GlobalToggle key={name} label="Theme" name={"theme"} options={['light', 'dark']}  />
+      return <GlobalToggle key={key} label="Theme" name={"theme"} options={['light', 'dark']}  />
     } 
   }
   render() {

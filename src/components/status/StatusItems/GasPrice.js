@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import StatusItem from '../StatusItem'
+import EthValue from '../../../widgets/EthValue'
 
 export default class GasPrice extends Component {
   state = {
@@ -7,15 +8,22 @@ export default class GasPrice extends Component {
   }
   componentDidMount = async () => {
     const { provider } = this.props
-    const gasPrice = await provider.getGasPrice()
-    this.setState({
-      gasPrice
-    })
+    try {
+      const gasPrice = await provider.getGasPrice()
+      this.setState({
+        gasPrice
+      })
+    } catch (error) {
+      this.setState({
+        gasPrice: -1
+      })
+    }
+
   }
   render() {
     const { gasPrice } = this.state
     return (
-      <StatusItem label="Gas Price" value={ gasPrice ? gasPrice.toString() : '<undefined>'} />
+      <StatusItem label="Gas Price" value={() => <EthValue wei={gasPrice} unit="gwei" style={{ padding: 0}} />} />
     )
   }
 }
