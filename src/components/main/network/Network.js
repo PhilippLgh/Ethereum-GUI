@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Container from '../../../widgets/Container'
 import Tree from '../../../widgets/Tree'
 import Error from '../../../widgets/Error'
+import Connectivity from '../../../widgets/Connectivity'
 
 export default class Network extends Component {
   state = {
@@ -49,16 +50,17 @@ export default class Network extends Component {
   render() {
     const { networkData, error } = this.state
     return (
-      <Container>
-        <h2>Network</h2>
-        {networkData && <Tree
-          data={networkData}
-          orientation="horizontal"
-          pathFunc="straight"
-          centered="vertically"
-        />}
-        <Error error={error} />
-      </Container>
+      <Connectivity>
+        <Container>
+          {networkData && <Tree
+            data={networkData}
+            orientation="horizontal"
+            pathFunc="straight"
+            centered="vertically"
+          />}
+          <Error error={error} />
+        </Container>
+      </Connectivity>
     )
   }
 }
