@@ -4,16 +4,26 @@ import Tree from 'react-d3-tree';
 export default class TreeRenderer extends React.Component {
   state = {}
   componentDidMount() {
+    const { centered = 'default' } = this.props
     const dimensions = this.treeContainer.getBoundingClientRect();
-    this.setState({
-      translate: {
+    const values = {
+      vertically: {
+        x: 50,
+        y: dimensions.height / 2
+      },
+      default: {
         x: dimensions.width / 2,
         y: dimensions.height / 5 // 20%
+      }
+    }
+    this.setState({
+      translate: {
+        ...values[centered]
       }
     });
   }
   render() {
-    const { data, style } = this.props
+    const { data, style, orientation = 'vertical', pathFunc='straight' } = this.props
     const { translate } = this.state
     return (
       <div 
@@ -24,8 +34,8 @@ export default class TreeRenderer extends React.Component {
       }}>
         <Tree 
           data={data} 
-          orientation="vertical" 
-          pathFunc="step"
+          orientation={orientation}
+          pathFunc={pathFunc}
           translate={{...translate}}
           />
       </div>

@@ -12,7 +12,8 @@ class StatusItem extends Component {
         <span className="StatusLabel" style={{
           color: theme.statusBar.label.color,
           textTransform: 'uppercase',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          paddingTop: 5
         }}><Text>{ label }</Text></span>
         <span className="StatusValue" style={{
           color: theme.statusBar.value.color

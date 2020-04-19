@@ -3,11 +3,12 @@ import Text from './Text'
 
 export default class Switch extends Component {
   render() {
-    const { checked = false, onChecked = () => { }, style = {} } = this.props
+    const { checked = false, label, onChecked = () => { }, style = {} } = this.props
     return (
       <span style={{
         marginLeft: 5,
-        marginRight: 10
+        marginRight: 10,
+        ...style
       }}>
 
         <input type="checkbox" id="scales" name="scales" checked={checked} onChange={(ev) => {
@@ -16,8 +17,8 @@ export default class Switch extends Component {
         }} />
         <Text style={{
           fontWeight: 'bold',
-          color: 'white'
-        }}>Decoded</Text>
+          color: style.color
+        }}>{label}</Text>
       </span>
 
     )

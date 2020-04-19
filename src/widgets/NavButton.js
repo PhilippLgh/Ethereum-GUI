@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import Button from './Button'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
-export default class NavButton extends Component {
+class NavButton extends Component {
   render() {
+    const { label, children, to } = this.props
     return (
-      <Button onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }} >
-        <Link to={this.props.to} >{this.props.children || this.props.label}</Link>
-      </Button>
+      <Button label={label} onClick={() => this.props.history.push(to)}>{children}</Button>
     )
   }
 }
+
+export default withRouter(NavButton)

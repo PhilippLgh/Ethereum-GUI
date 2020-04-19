@@ -5,10 +5,10 @@ import ContainerHeader from './ContainerHeader'
 
 class Container extends Component {
   render() {
-    const { style = {}, global, header } = this.props
+    const { style = {}, global, header, isCard=true } = this.props
     const theme = useTheme(global)
     return (
-      <div className="card" style={{
+      <div className={isCard ? 'card' : ''} style={{
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -21,7 +21,7 @@ class Container extends Component {
         borderRadius: 10,
         ...style
       }}>
-        {header && <ContainerHeader style={this.props.headerStyle} title={header} /> }
+        { header && <ContainerHeader style={this.props.headerStyle} title={header} /> }
         { this.props.children }
       </div>
     )

@@ -6,7 +6,8 @@ export default class Modal extends Component {
   } 
   render() {
     // let { visibility = this.props.show } = this.state
-    let visibility = this.props.show ? 'visible' : 'hidden'
+    let { show, onClose = () => {}, children } = this.props
+    let visibility = show ? 'visible' : 'hidden'
     return (
       <div style={{
         position: 'fixed',
@@ -18,16 +19,22 @@ export default class Modal extends Component {
         backgroundColor: '#2222227a',
         alignItems: 'center', 
         justifyContent: 'center',
+        zIndex: 10,
         visibility
       }}
-      onClick={() => this.props.onClose() }
+      onClick={() => { 
+        // TODO hide here for immediate feedback?
+        onClose() 
+      }}
       >
         <div className="card" style={{
           backgroundColor: 'white',
           width: 500,
           height: 250,
+          display: 'flex',
+          visibility
         }}>
-          { this.props.children }
+          { children }
         </div>
       </div>
     )

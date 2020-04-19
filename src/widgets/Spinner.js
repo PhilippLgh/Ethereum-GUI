@@ -14,17 +14,19 @@ export default class Spinner extends Component {
     });
   }
   render() {
+    let { size } = this.props
     const { dimensions } = this.state
-    let size = dimensions ? dimensions.width * 0.1 : undefined
-    const fillColor = '#7D4CDB'
+    size = size || (dimensions ? dimensions.width * 1 : undefined)
+    const fillColor = '#08a79c'
     return (
       <div 
       ref={c => (this.container = c)}
       style={{
         display: 'flex',
-        flex: 1,
+        flex: this.props.size ? 0 : 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        ...this.props.style
       }} >
         <svg
           version="1.1"

@@ -4,14 +4,14 @@ import Clickable from './Clickable'
 
 class ListItem extends Component {
   render() {
-    const { children, style, to, onClick = (() => {
+    const { children, clickable = true, style, to, onClick = (() => {
       if(!to) return
       this.props.history.push(to)
     })} = this.props
     return (
-      <Clickable onClick={onClick} style={{
+      <Clickable clickable={clickable} onClick={onClick} style={{
         display: 'flex',
-        cursor: 'pointer',
+        cursor: clickable? 'pointer' : 'default',
         borderTop: '1px solid #e6e6e6',
         color: '#3e3e3e',
         padding: 5,

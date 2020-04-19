@@ -5,8 +5,8 @@ export default class Select extends Component {
     const { options = [], label } = this.props
     return (
       <div style={{
-        display: 'flex',
-        flexDirection: 'column'
+        display: 'inline-flex',
+        flexDirection: 'column',
       }}>
         <label htmlFor={label}>{label}</label>
         <select id={label} style={{ marginTop: 5 }}>

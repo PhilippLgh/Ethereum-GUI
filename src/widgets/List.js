@@ -29,7 +29,7 @@ export default class List extends Component {
     this.stopPolling()
   }
   loadItems = async () => {
-    const { loadItems = () => undefined, items: providedItems = [] } = this.props
+    const { loadItems = () => undefined, items: providedItems = [], processItems } = this.props
     this.setState({
       isLoading: true
     })
@@ -37,6 +37,9 @@ export default class List extends Component {
       let items = (await loadItems()) || providedItems
       // filter null and undefined
       items = items.filter(item => !!item)
+      if (typeof processItems === 'function') {
+        items = processItems(items)
+      }
       this.setState({
         items,
         isLoading: false
@@ -100,7 +103,8 @@ export default class List extends Component {
     const { elements } = this.props
     return (
       <Row style={{
-        height: 50,
+        height: 40,
+        padding: 10,
         backgroundColor: 'rgba(243, 243, 243, 0.1)',
         alignItems: 'center'
       }}>

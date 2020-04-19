@@ -14,7 +14,8 @@ export const LabeledField = withGlobalState(({ children, label, value, valueEl, 
     }}>
       <div style={{ 
         fontSize: '0.8rem', 
-        color: theme.field.label.color
+        color: theme.field.label.color,
+        alignSelf: alignValue,
       }}>
         <Text>{label}</Text>
       </div>
