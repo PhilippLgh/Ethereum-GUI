@@ -21,6 +21,8 @@ const createProvider = (selectedProvider, providers) => {
   } else {
     newProvider = new ethers.providers.JsonRpcProvider(`http://${url}`)
   }
+  // we need a way to detect new instances of provider
+  newProvider.createdAt = Date.now()
   return newProvider
 }
 
@@ -37,16 +39,23 @@ class App extends Component {
     if (interval) {
       return
     }
-    interval = setInterval(async () => {
+    const { global: _global } = this.props
+    const connectionInterval = _global.state.connectionInterval || 2000
+
+    const checkConnection = async () => {
       const { global } = this.props
       const { state: globalState } = global
-      let { provider, isConnected, selectedProvider, providers } = globalState
-      provider = provider || createProvider(selectedProvider, providers)
+      // some values are cached on old provider sow e should not re-use it when the connection comes back
+      // such as the createdAt flag & potentially calls to getNetwork()
+      // if we want to detect network changes of re-started clients we have to reset completely
+      let { /*provider,*/ isConnected, selectedProvider, providers, } = globalState
+      let provider = createProvider(selectedProvider, providers)
+      let block
       try {
-        const block = await provider.getBlockNumber()
+        block = await provider.getBlockNumber()
         // network cannot be used to check - seems to get cached
         // const network = await provider.getNetwork()
-        if (block && !isConnected) {
+        if (block !== undefined && !isConnected) {
           global.setState({ isConnected: true, provider: provider })
         }
       } catch (error) {
@@ -55,30 +64,20 @@ class App extends Component {
           global.setState({ isConnected: false  })
         }
       }
-    }, 2000)
+      // only update if changed?
+      // FIXME this causes many re-renders on all components
+      /*
+      this.setState({
+        currentBlock: block || 0
+      })
+      */
+    }
+
+    // run once immediately
+    checkConnection()
+    interval = setInterval(checkConnection, connectionInterval)
     this.setState({
       interval,
-    })
-  }
-  startPolling = (provider) => {
-    let { interval, currentBlock } = this.state
-    if (interval) { return }
-    let errorCounter = 0
-    interval = setInterval(async () => {
-      try {
-        let _currentBlock = await provider.getBlockNumber()
-        if (_currentBlock > currentBlock) {
-          this.setState({
-            currentBlock: _currentBlock
-          })
-        }
-      } catch (error) {
-        errorCounter++
-      }
-    }, 500)
-    this.setState({
-      interval,
-      errorCounter
     })
   }
   render() {
