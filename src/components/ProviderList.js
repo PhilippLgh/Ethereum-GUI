@@ -8,16 +8,17 @@ import List from '../widgets/List'
  */
 class ProviderList extends Component {
   render() {
-    const { global, className, elements, itemName, loadItems, renderItem } = this.props
+    const { global, className, elements, itemName, loadItems, renderItem, processItems } = this.props
     const { state } = global
     const { provider } = state
     return (
       <List 
         className={className}
         elements={elements}
-        dataSource={provider.connection.url}
+        dataSource={provider.createdAt}
         itemName={itemName}
         loadItems={() => loadItems(provider)}
+        processItems={processItems}
         renderItem={item => renderItem({ provider, item }) }
       />
     )
