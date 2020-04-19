@@ -7,6 +7,7 @@ import Pill from '../../../widgets/Pill'
 import Address from '../../../widgets/Address'
 import EthValue from '../../../widgets/EthValue'
 import Gas from '../../../widgets/Gas'
+import BlockTime from '../../../widgets/BlockTime'
 
 export default class TransactionItem extends Component {
   state = {
@@ -80,7 +81,7 @@ export default class TransactionItem extends Component {
           </Column>
           <Column>
             <LabeledField label="Value" >
-              <EthValue value={value} />
+              <EthValue wei={value} />
             </LabeledField>
           </Column>
           <Column>
@@ -92,8 +93,12 @@ export default class TransactionItem extends Component {
         <Row style={{
           justifyContent: 'normal'
         }}>
-          <LabeledField label="Block Created" value={blockNumber} />
-          <LabeledField label="Block Mined" value={blockNumberMined} />
+          <LabeledField label="Block Created">
+            <BlockTime block={blockNumber} />
+          </LabeledField>
+          <LabeledField label="Block Mined" >
+            <BlockTime block={blockNumberMined} />
+          </LabeledField>
         </Row>
 
         {/*

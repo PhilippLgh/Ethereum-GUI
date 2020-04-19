@@ -29,7 +29,7 @@ export default class AccountListItem extends Component {
         <LabeledField label="Balance" style={{
           flexBasis: '15em',
         }}>
-          <EthValue value={balance} />
+          <EthValue wei={balance} />
         </LabeledField>
         <LabeledField 
           label="Tx Count" 
@@ -41,7 +41,7 @@ export default class AccountListItem extends Component {
             paddingTop: 5
           }}
         />
-        <NavButton to={'/transactions/new'} label={"send"} />
+        <NavButton to={`/transactions/new/${address}`} label={"send"} />
       </ListItem>
     )
   }

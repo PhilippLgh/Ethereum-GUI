@@ -38,9 +38,12 @@ class AddressListItem extends Component {
     const { address, } = this.props
     const { balance, alias } = this.state
     return (
-      <ListItem style={{
-        justifyContent: 'space-between'
-      }}>
+      <ListItem 
+        clickable={false}
+        style={{
+          justifyContent: 'space-between'
+        }}
+      >
         <LabeledField label="Address" style={{
           flexBasis: '30em'
         }} >
@@ -54,7 +57,7 @@ class AddressListItem extends Component {
         <LabeledField label="Balance" style={{
           flexBasis: '15em',
         }}>
-          <EthValue value={balance} />
+          <EthValue wei={balance} />
         </LabeledField>
         <LabeledField label="Contract" value="false" styleValue={{ paddingTop: 5 }} />
       </ListItem>
