@@ -29,13 +29,11 @@ export default class Console extends Component {
     this.autoCompleteField.blur();
   }
   handleEnter = async (input) => {
-    console.log('process input', input)
+      // eslint-disable-next-line
     const { context = {} } = this.props
-    // eslint-disable-next-line
-    const contract = context['contract1']
     try {
       // eslint-disable-next-line
-      const result = await eval(`contract.${input}`)
+      const result = await eval(`context.${input}`)
       this.setState({ result, error: undefined })
     } catch (error) {
       console.log('error', error)
@@ -45,7 +43,7 @@ export default class Console extends Component {
   render() {
     const { result, error } = this.state
     const { context = {} } = this.props
-    const flattened = flattenObject(context['contract1'])
+    const flattened = flattenObject(context)
     const options = Object.keys(flattened).filter(el => !el.includes('.'))
     // console.log('options', options)
     return (
@@ -53,8 +51,6 @@ export default class Console extends Component {
         tabIndex={0}
         style={{
           backgroundColor: 'rgb(39, 40, 34)',
-          height: 100,
-          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           flex: 1,

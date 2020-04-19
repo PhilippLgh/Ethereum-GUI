@@ -6,7 +6,6 @@ class OptionListItem extends Component {
     return (
       <div
         style={{
-          fontSize: '0.85rem',
           backgroundColor: isActive ? '#6f6f6f6b' : 'transparent',
           color: isActive ? 'greenyellow' : '#eee',
           padding: 2
@@ -35,7 +34,7 @@ class OptionList extends Component {
         left,
         minWidth: 200,
         minHeight: 50,
-        backgroundColor: '#6f6f6f3b',
+        backgroundColor: '#3c3c3c',
         visibility: (options && options.length > 1) ? 'visible' : 'hidden',
         boxShadow: 'rgba(72, 154, 212, 0.2) 0px 1px 2px 0px'
       }}>
@@ -115,7 +114,7 @@ export default class AutoCompleteField extends Component {
     const box = this.userInput.getBoundingClientRect()
     this.setState({
       suggestBox: {
-        top: box.top + box.height + 15,
+        top: box.top + box.height + 3,
         left: box.left
       }
     })
