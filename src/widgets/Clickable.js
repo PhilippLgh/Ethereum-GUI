@@ -12,7 +12,7 @@ export default class Clickable extends Component {
     e.stopPropagation();
   }
   render() {
-    const { onClick = () => { }, style = {} } = this.props
+    const { onClick = () => { }, style = {}, clickable = true } = this.props
     const { hover } = this.state
     return (
       <div
@@ -21,14 +21,14 @@ export default class Clickable extends Component {
           e.stopPropagation()
           e.preventDefault()
         }}
-        className="clickable"
+        className={clickable ? 'clickable' : ''}
         style={{
           display: 'inline-block',
           paddingTop: 5,
           paddingBottom: 5,
           cursor: 'pointer',
           ...style,
-          backgroundColor: hover ? '#bdbdbd15' : style.backgroundColor
+          backgroundColor: (hover && clickable) ? '#bdbdbd15' : style.backgroundColor
         }}
         onMouseEnter={this.onMouseOver}
         onMouseOver={this.onMouseOver}
