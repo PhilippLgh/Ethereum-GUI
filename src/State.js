@@ -8,6 +8,7 @@ export const globalState = {
   dangerous: false,
   isConnected: false,
   selectedProvider: 'Ganache', // user setting
+  connectionInterval: 2000, // test for connection every x ms
   providers: [
     { name: 'Geth', url: '127.0.0.1:8545' }
    ,{ name: 'Ganache', url: '127.0.0.1:7545' }
@@ -33,22 +34,24 @@ export const globalState = {
     { label: 'Settings', route: '/settings', exclude: false },
   ],
   statusBarItems: [
-    /*
-    { name: 'sync', exclude: false },
+    { name: 'provider', exclude: false },
+    { name: 'network', exclude: false },
     { name: 'current_block', exclude: false },
+    { name: 'sync', exclude: false },
+
     { name: 'state_time', exclude: false },
     { name: 'gas_price', exclude: false },
-    { name: 'hardfork', exclude: false },
-    { name: 'network', exclude: false },
-    */
-    { name: 'rpc_server', exclude: false },
+
+
     /*
+    { name: 'hardfork', exclude: false },
+    */
+
     { name: 'currency', exclude: false },
     { name: 'time', exclude: false },
     { name: 'alias', exclude: false },
     { name: 'signer', exclude: false },
     { name: 'theme', exclude: false }
-    */
   ],
   aliases: {
   }

@@ -42,7 +42,7 @@ class StatusBar extends Component {
     else if(name === 'network'){
       return <NetworkId key={key} provider={provider} />
     }
-    else if(name === 'rpc_server'){
+    else if(name === 'provider'){
       return <RpcServer key={key} provider={provider} />
     }  
     else if(name === 'currency'){
