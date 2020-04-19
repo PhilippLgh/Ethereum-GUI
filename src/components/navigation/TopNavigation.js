@@ -8,6 +8,7 @@ class TopNavigation extends Component {
     const { state: globalState } = this.props.global
     const theme = useTheme(this.props.global)
     const { items: navItems } = this.props
+    const { isConnected } = globalState
     return (
       <nav className="TopNav" style={{
         backgroundColor: theme.topNav.backgroundColor,
@@ -20,7 +21,7 @@ class TopNavigation extends Component {
         key={label}
         route={route} 
         label={label} 
-        hasBadge={globalState.badge === label}
+        hasBadge={globalState.badge === label || (label === 'Client' && !isConnected) }
         color={theme.topNav.item.color} 
         />)}
       </nav>
