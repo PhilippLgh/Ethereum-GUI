@@ -1,20 +1,23 @@
 import React, { Component } from 'react'
 import TransactionItem from './TransactionItem'
-import { getAllTransactions } from '../../../js/utils'
+import { getDataProvider } from '../../../js/DataProvider'
 import Container from '../../../widgets/Container'
 import ProviderList from '../../ProviderList'
+import Connectivity from '../../../widgets/Connectivity'
 
 export default class TransactionList extends Component {
   render() {
     return (
-      <Container>
-        <ProviderList
-          className="TransactionList"
-          itemName="Transactions"
-          loadItems={provider => getAllTransactions(provider)}
-          renderItem={({ provider, item: tx}) => <TransactionItem key={tx.hash} provider={provider} tx={tx} /> }
-        />
-      </Container>
+      <Connectivity>
+        <Container>
+          <ProviderList
+            className="TransactionList"
+            itemName="Transactions"
+            loadItems={provider => getDataProvider(provider).getAllTransactions()}
+            renderItem={({ provider, item: tx}) => <TransactionItem key={tx.hash} provider={provider} tx={tx} /> }
+          />
+        </Container>
+      </Connectivity>
     )
   }
 }

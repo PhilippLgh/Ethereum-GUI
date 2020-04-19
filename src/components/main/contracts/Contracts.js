@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import ContractListItem from './ContractListItem'
-import { getAllContracts } from '../../../js/utils'
+import { getDataProvider } from '../../../js/DataProvider'
 import NavButton from '../../../widgets/NavButton'
-import Button from '../../../widgets/Button'
 import Modal from '../../../widgets/Modal'
 import Container from '../../../widgets/Container'
 import ProviderList from '../../ProviderList'
@@ -37,7 +36,7 @@ export default class Contracts extends Component {
                 */}
               </div>
             )}
-            loadItems={provider => getAllContracts(provider)}
+            loadItems={provider => getDataProvider(provider).getAllContracts()}
             renderItem={({ provider, item: contract }) => <ContractListItem key={contract.contractAddress} provider={provider} contract={contract} />}
           />
           <Modal onClose={() => this.setState({ showPrompt: false })} show={showPrompt} />

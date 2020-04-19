@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
 import Block from './BlockListItem'
-import { getBlocks } from '../../../js/utils'
+import { getDataProvider } from '../../../js/DataProvider'
 import Container from '../../../widgets/Container'
 import ProviderList from '../../ProviderList'
 import Connectivity from '../../../widgets/Connectivity'
 
 export default class BlockList extends Component {
   render() {
-    let { start, end } = this.props
-    end = 100
+    const latestBlock = 2000
+    // let { start, end } = this.props
+    let end = latestBlock
+    let start = Math.max(latestBlock - 100, 0)
     return (
       <Connectivity>
         <Container>
           <ProviderList
             className="BlockList"
             itemName="Blocks"
-            loadItems={provider => getBlocks(provider, end, Math.max(start, 0))}
+            elements={() => <div>Block: {start}-{end}</div>}
+            loadItems={provider => getDataProvider(provider).getBlocks(end, start)}
+            processItems={items => items.reverse()} // display latest block first
             renderItem={({ provider, item: block}) => <Block key={block.number} block={block} /> }
           />
         </Container>
