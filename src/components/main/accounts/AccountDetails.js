@@ -9,7 +9,7 @@ class AccountDetails extends Component {
     const { params } = match
     const { address } = params
     return (
-    <Container header={() => <Address label="Account" address={address}/>}>
+      <Container header={() => <Address label="Account" address={address} />}>
 
       </Container>
     )
