@@ -66,11 +66,11 @@ class App extends Component {
       }
       // only update if changed?
       // FIXME this causes many re-renders on all components
-      /*
-      this.setState({
-        currentBlock: block || 0
-      })
-      */
+      if (block && this.state.currentBlock !== block) {
+        this.setState({
+          currentBlock: block || 0
+        })
+      }
     }
 
     // run once immediately
