@@ -4,6 +4,11 @@ import Button from './Button'
 
 export default withRouter(({ history, style }) => {
   return (
-    <Button style={style} onClick={() => history.goBack()}>{"<- Back"}</Button>
+    <Button 
+      style={style} 
+      onClick={() => history.goBack()}
+      icon="ArrowLeft"
+      label="Back"
+    />
   )
 })
