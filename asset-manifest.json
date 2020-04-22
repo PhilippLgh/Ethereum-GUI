@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/ethereum-gui/static/css/main.952301f1.chunk.css",
+    "main.js": "/ethereum-gui/static/js/main.1fa63549.chunk.js",
+    "main.js.map": "/ethereum-gui/static/js/main.1fa63549.chunk.js.map",
+    "runtime-main.js": "/ethereum-gui/static/js/runtime-main.dfe66ad8.js",
+    "runtime-main.js.map": "/ethereum-gui/static/js/runtime-main.dfe66ad8.js.map",
+    "static/js/2.7abbef32.chunk.js": "/ethereum-gui/static/js/2.7abbef32.chunk.js",
+    "static/js/2.7abbef32.chunk.js.map": "/ethereum-gui/static/js/2.7abbef32.chunk.js.map",
+    "0eb0363c21cede2e29f4.worker.js": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js",
+    "0eb0363c21cede2e29f4.worker.js.LICENSE.txt": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js.LICENSE.txt",
+    "0eb0363c21cede2e29f4.worker.js.map": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js.map",
+    "index.html": "/ethereum-gui/index.html",
+    "precache-manifest.2dcd09b318669d4edc6fce6d90434b3d.js": "/ethereum-gui/precache-manifest.2dcd09b318669d4edc6fce6d90434b3d.js",
+    "service-worker.js": "/ethereum-gui/service-worker.js",
+    "static/css/main.952301f1.chunk.css.map": "/ethereum-gui/static/css/main.952301f1.chunk.css.map",
+    "static/js/2.7abbef32.chunk.js.LICENSE.txt": "/ethereum-gui/static/js/2.7abbef32.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dfe66ad8.js",
+    "static/js/2.7abbef32.chunk.js",
+    "static/css/main.952301f1.chunk.css",
+    "static/js/main.1fa63549.chunk.js"
+  ]
+}
