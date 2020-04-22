@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/ethereum-gui/static/css/main.952301f1.chunk.css",
-    "main.js": "/ethereum-gui/static/js/main.d89b37df.chunk.js",
-    "main.js.map": "/ethereum-gui/static/js/main.d89b37df.chunk.js.map",
+    "main.js": "/ethereum-gui/static/js/main.b215ace6.chunk.js",
+    "main.js.map": "/ethereum-gui/static/js/main.b215ace6.chunk.js.map",
     "runtime-main.js": "/ethereum-gui/static/js/runtime-main.dfe66ad8.js",
     "runtime-main.js.map": "/ethereum-gui/static/js/runtime-main.dfe66ad8.js.map",
-    "static/js/2.7abbef32.chunk.js": "/ethereum-gui/static/js/2.7abbef32.chunk.js",
-    "static/js/2.7abbef32.chunk.js.map": "/ethereum-gui/static/js/2.7abbef32.chunk.js.map",
+    "static/js/2.3b7101a4.chunk.js": "/ethereum-gui/static/js/2.3b7101a4.chunk.js",
+    "static/js/2.3b7101a4.chunk.js.map": "/ethereum-gui/static/js/2.3b7101a4.chunk.js.map",
     "0eb0363c21cede2e29f4.worker.js": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js",
     "0eb0363c21cede2e29f4.worker.js.LICENSE.txt": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js.LICENSE.txt",
     "0eb0363c21cede2e29f4.worker.js.map": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js.map",
     "index.html": "/ethereum-gui/index.html",
-    "precache-manifest.a535c82f0c7b49ccc100586eb727e7af.js": "/ethereum-gui/precache-manifest.a535c82f0c7b49ccc100586eb727e7af.js",
+    "precache-manifest.8f3582ba31c105b6c0cf83291c5731a8.js": "/ethereum-gui/precache-manifest.8f3582ba31c105b6c0cf83291c5731a8.js",
     "service-worker.js": "/ethereum-gui/service-worker.js",
     "static/css/main.952301f1.chunk.css.map": "/ethereum-gui/static/css/main.952301f1.chunk.css.map",
-    "static/js/2.7abbef32.chunk.js.LICENSE.txt": "/ethereum-gui/static/js/2.7abbef32.chunk.js.LICENSE.txt"
+    "static/js/2.3b7101a4.chunk.js.LICENSE.txt": "/ethereum-gui/static/js/2.3b7101a4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.dfe66ad8.js",
-    "static/js/2.7abbef32.chunk.js",
+    "static/js/2.3b7101a4.chunk.js",
     "static/css/main.952301f1.chunk.css",
-    "static/js/main.d89b37df.chunk.js"
+    "static/js/main.b215ace6.chunk.js"
   ]
 }
