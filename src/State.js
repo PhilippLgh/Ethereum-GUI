@@ -29,7 +29,7 @@ export const globalState = {
     { label: 'Network', route: '/network', exclude: false },
     { label: 'Client', route: '/client', exclude: false },
     { label: 'Workflows', route: '/workflows', exclude: false },
-    { label: 'Tools', route: '/tools', exclude: true },
+    // { label: 'Tools', route: '/tools', exclude: false },
     { label: 'Scripts', route: '/scripts', exclude: true },
     { label: 'Settings', route: '/settings', exclude: false },
   ],

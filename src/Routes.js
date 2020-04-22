@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   Switch,
-  Route,
 } from "react-router-dom"
 
 import BlockList from './components/main/blocks/BlockList';
@@ -33,18 +32,18 @@ export default ({ provider, currentBlock }) =>
     <AppliedRoute path="/addresses" component={AddressList} />
     <AppliedRoute path="/blocks/:blockNumber" component={BlockDetails} props={{ provider }} />
     <AppliedRoute path="/blocks" component={BlockList} props={{ start: 0, end: currentBlock }} />
-    <AppliedRoute path="/transactions/new/:from" component={SendTransaction} props={{ provider }} />
-    <AppliedRoute path="/transactions/:txHash" component={TransactionDetails} props={{ provider }} />
+    <AppliedRoute path="/transactions/new/:to" component={SendTransaction} key={provider ? provider.createdAt : 'not_set'} props={{ provider }} />
+    <AppliedRoute path="/transactions/:txHash" component={TransactionDetails}  />
     <AppliedRoute path="/transactions" component={TransactionList} props={{ blockNumber: currentBlock }} />
     <AppliedRoute path="/contracts/new" component={CreateContractView} props={{ provider }} />
-    <AppliedRoute path="/contracts/:address" component={ContractDetails} props={{ provider }} />
+    <AppliedRoute path="/contracts/:address" component={ContractDetails} key={provider ? provider.createdAt : 'not_set'}  />
     <AppliedRoute path="/contracts" component={Contracts} />
     <AppliedRoute path="/network" component={Network} props={{ provider }} />
-    <AppliedRoute path="/client" component={Client} props={{ provider }} />
+    <AppliedRoute path="/client" component={Client} key={provider ? provider.createdAt : 'not_set'} props={{ provider }} />
     <AppliedRoute path="/workflows/jobs/:jobId" component={JobDetails} props={{ provider }} />
     <AppliedRoute path="/workflows/:workflowId" component={WorkflowDetails} props={{ provider }} />
     <AppliedRoute path="/workflows" component={Workflows} props={{ provider }} />
     <AppliedRoute path="/scripts" component={ScriptList} props={{ provider }} />
-    <AppliedRoute path="/tools" component={Tools} props={{ provider }} />
+    {/* <AppliedRoute path="/tools" component={Tools} props={{ provider }} /> */ }
     <AppliedRoute path="/settings" component={Settings} props={{ provider }} />
   </Switch>

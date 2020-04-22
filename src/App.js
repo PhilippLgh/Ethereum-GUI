@@ -61,7 +61,7 @@ class App extends Component {
       } catch (error) {
         // console.log('error', error)
         if (isConnected) {
-          global.setState({ isConnected: false  })
+          global.setState({ isConnected: false })
         }
       }
       // only update if changed?
@@ -87,6 +87,7 @@ class App extends Component {
     const { currentBlock, error } = this.state
     const { provider } = globalState
 
+    // TODO allows workflow to be part of url so that a link to a contract e.g. includes the infrastructure info
     return (
       <Router>
         <div className="App" style={{
@@ -96,8 +97,9 @@ class App extends Component {
           backgroundColor: theme.backgroundColor,
           fontFamily: `'Roboto', sans-serif`
         }} >
-          <Row style={{ padding: 3 }}>
+          <Row style={{ padding: 3, fontSize: '1.0rem' }}>
             <span style={{ color: '#939393' }}>Ethereum GUI v1.0.0</span>
+            <span style={{ color: '#939393', marginRight: 10 }}>philipplgh.eth</span>
           </Row>
           <TopNavigation items={navItems} />
           <StatusBar provider={provider} currentBlock={currentBlock} />
