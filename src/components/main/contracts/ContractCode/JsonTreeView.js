@@ -5,6 +5,9 @@ import { transformTree } from '../../../../js/TreeWalker'
 
 export default class JsonTreeView extends Component {
   renderTree(ast) {
+    if (!ast) {
+      return <span>No data</span>
+    }
     console.log('ast', ast)
     const transformer = node => ({
       name: node.nodeType || 'root',
@@ -22,6 +25,21 @@ export default class JsonTreeView extends Component {
       }} />
     )
   }
+  renderJSON(data) {
+    return (
+      <ReactJson
+        src={data}
+        theme="monokai"
+        name="storage"
+        displayDataTypes={false}
+        enableClipboard={false}
+        style={{
+          padding: 10,
+          flex: 1
+        }}
+      />
+    )
+  }
   render() {
     const { data } = this.props
     const isTree = true
@@ -32,17 +50,7 @@ export default class JsonTreeView extends Component {
       }}>
         {isTree
           ? this.renderTree(data)
-          : <ReactJson
-            src={data}
-            theme="monokai"
-            name="storage"
-            displayDataTypes={false}
-            enableClipboard={false}
-            style={{
-              padding: 10,
-              flex: 1
-            }}
-          />
+          : this.renderJSON(data)
         }
       </div>
     )
