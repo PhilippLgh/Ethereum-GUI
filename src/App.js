@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { ethers, providers } from 'ethers';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
 } from "react-router-dom"
 import TopNavigation from './components/navigation/TopNavigation';
 import StatusBar from './components/status/StatusBar';

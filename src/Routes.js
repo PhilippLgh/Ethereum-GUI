@@ -28,6 +28,7 @@ import AppliedRoute from './AppliedRoute';
 export default ({ provider, currentBlock }) =>
   <Switch>
     <AppliedRoute path="/accounts/:address" component={AccountDetails} props={{ provider }}  />
+    <AppliedRoute path="/" exact component={AccountsList} />
     <AppliedRoute path="/accounts" component={AccountsList} />
     <AppliedRoute path="/addresses" component={AddressList} />
     <AppliedRoute path="/blocks/:blockNumber" component={BlockDetails} props={{ provider }} />
