@@ -4,7 +4,7 @@ export default class Pill extends Component {
   render() {
     return (
       <div style={{
-        backgroundColor: 'lightblue',
+        backgroundColor: '#08a79c',
         paddingLeft: 10,
         paddingRight: 10,
         paddingTop: 5,

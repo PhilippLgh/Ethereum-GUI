@@ -8,7 +8,7 @@ export default class Tabs extends Component {
   render() {
     let { selectedTab } = this.state
     selectedTab = this.props.selectedTab || selectedTab
-    let { children } = this.props
+    let { children, style } = this.props
     if (!Array.isArray(children)) {
       children = [children]
     }
@@ -23,8 +23,9 @@ export default class Tabs extends Component {
           style={{ 
             margin: 5, 
             fontWeight: 'bold',
-            borderBottom: idx === selectedTab ? '1px solid black' : 'none',
-            cursor: 'pointer' 
+            borderBottom: idx === selectedTab ? '2px solid #08a79c' : 'none',
+            cursor: 'pointer',
+            ...style 
           }}
           onClick={() => this.setState({ selectedTab: idx })}
         >{c.props.label}</div>)}</Row>
