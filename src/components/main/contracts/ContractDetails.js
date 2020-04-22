@@ -47,7 +47,8 @@ class ContractDetails extends Component {
       provider.off('block', this.loadContractTransactions)
     } catch (error) { }
   }
-  loadContractTransactions = async (provider) => {
+  loadContractTransactions = async () => {
+    const provider = this.getProvider()
     try {
       const transactions = await getDataProvider(provider).getAllTxByContract(this.getAddress())
       this.setState({
@@ -103,12 +104,10 @@ class ContractDetails extends Component {
   render() {
     const address = this.getAddress()
     const provider = this.getProvider()
-
     // required for console
     const { contractProxy, signerAddress, selectedTx } = this.state
     // for tx browser
     const { transactions } = this.state
-
     return (
       <Container
         style={{
@@ -158,13 +157,14 @@ class ContractDetails extends Component {
             </div>
           </Row>
           <div style={{
-            backgroundColor: 'red',
             flex: 2,
             display: 'flex'
           }}>
             <ContractConsole
               signerAddress={signerAddress}
+              transactions={transactions}
               selectedTx={selectedTx}
+              contractAddress={address}
               contractProxy={contractProxy} // commands are executed on proxy instance
             />
           </div>

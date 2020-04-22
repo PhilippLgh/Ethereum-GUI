@@ -12,6 +12,7 @@ export default class CodeTab extends Component {
     this.setState({
       value: ev.target.value
     })
+    this.props.onChange(ev.target.value)
   }
   renderOverlay() {
     const { onData } = this.props

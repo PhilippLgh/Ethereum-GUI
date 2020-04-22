@@ -36,6 +36,7 @@ export default class Contracts extends Component {
                 */}
               </div>
             )}
+            itemName="contracts"
             loadItems={provider => getDataProvider(provider).getAllContracts()}
             renderItem={({ provider, item: contract }) => <ContractListItem key={contract.contractAddress} provider={provider} contract={contract} />}
           />

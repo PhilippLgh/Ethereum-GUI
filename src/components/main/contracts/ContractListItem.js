@@ -3,7 +3,7 @@ import ListItem from '../../../widgets/ListItem'
 import { LabeledField } from '../../../widgets/LabeledField'
 import Pill from '../../../widgets/Pill'
 import Address from '../../../widgets/Address'
-import BlockNumber from '../../../widgets/BlockNumber'
+import BlockTime from '../../../widgets/BlockTime'
 
 export default class ContractListItem extends Component {
   render() {
@@ -12,7 +12,7 @@ export default class ContractListItem extends Component {
     return (
       <ListItem to={`/contracts/${contractAddress}`} style={{ justifyContent: 'space-between' }} >
         <LabeledField label={'Block'}>
-          <BlockNumber block={blockNumber} />
+          <BlockTime block={blockNumber} />
         </LabeledField>
         <LabeledField label={'Name'}>
           <span>Unnamed</span>
