@@ -8,11 +8,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ethereum-gui/0eb0363c21cede2e29f4.worker.js.LICENSE.txt"
   },
   {
-    "revision": "f170bf1d3a664fa57bd18e3faa2c112b",
+    "revision": "0dc6cda3718231b532ac23eac8ed469d",
     "url": "/ethereum-gui/index.html"
   },
   {
-    "revision": "23813901a6caa34d9577",
+    "revision": "2996272b0690959d846e",
     "url": "/ethereum-gui/static/css/main.952301f1.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ethereum-gui/static/js/2.7abbef32.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "23813901a6caa34d9577",
-    "url": "/ethereum-gui/static/js/main.1fa63549.chunk.js"
+    "revision": "2996272b0690959d846e",
+    "url": "/ethereum-gui/static/js/main.d89b37df.chunk.js"
   },
   {
     "revision": "25862efa8f50860f3ae3",
