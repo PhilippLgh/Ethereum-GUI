@@ -16,9 +16,11 @@ export default class FileChooser extends Component {
       return;
     }
     const file = files[0]
-    const content = await readFile(file)
-    const parsed = JSON.parse(content)
-    this.props.onData(parsed)
+    let content = await readFile(file)
+    if (file.name.endsWith('.json')) {
+      content = JSON.parse(content)
+    }
+    this.props.onData(content)
   }
   render() {
     return (
