@@ -3,6 +3,7 @@ import Container from '../../../widgets/Container'
 import { StoreContext, withGlobalState } from '../../../Context'
 import { Row } from '../../../widgets/Row'
 import { Column } from '../../../widgets/Column'
+import GlobalToggle from '../../status/GlobalToggle'
 
 const Setting = withGlobalState(({ name, item, global }) => {
   return (
@@ -58,21 +59,31 @@ class Settings extends Component {
     return (
       <Container>
         <h2> Settings </h2>
-        <h4>Language</h4>
 
+        {/* 
+        <h4>Language</h4>
         <OptionGroup
           options={['English', 'Deutsch']}
         />
+        */}
 
         <h4>Theme</h4>
         {
           global.state.theme
         }
+
+        {/*
+        TODO custom provider settings
+        <h4>Dangerous</h4>
+        <GlobalToggle label="Dangerous operations" name={"dangerous"} options={[true, false]}  />
+
+
         <h4>Mode</h4>
 
         <OptionGroup
           options={['Default', 'Minimal', 'Expert', 'Custom']}
         />
+        */}
 
         <Row style={{
           justifyContent: 'normal',
@@ -82,13 +93,13 @@ class Settings extends Component {
           <Column>
             <h4>Navigation</h4>
             {
-              navItems.map(item => <Setting name="navItems" item={item}  />)
+              navItems.map((item, idx) => <Setting key={item.label || item.name} name="navItems" item={item}  />)
             }
           </Column>
           <Column>
             <h4>Statusbar</h4>
             {
-              statusBarItems.map(item => <Setting name="statusBarItems" item={item}  />)
+              statusBarItems.map((item, idx) => <Setting key={item.label || item.name} name="statusBarItems" item={item}  />)
             }
           </Column>
           <Column />

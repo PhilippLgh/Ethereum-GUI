@@ -22,8 +22,8 @@ export default class AccountsList extends Component {
             className="AccountList"
             elements={() => (
               <div>
-                <Button onClick={this.addAccount} >add</Button>
-                <Button onClick={this.loadAccounts} >refresh</Button>
+                <Button onClick={this.addAccount} >Add</Button>
+                <Button onClick={this.loadAccounts} >Refresh</Button>
               </div>
             )}
             itemName="accounts"
