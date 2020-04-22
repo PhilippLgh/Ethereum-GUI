@@ -110,7 +110,7 @@ export default class List extends Component {
       }}>
         {elements && elements()}
 
-        {items.length > 25 && <Pagination />}
+        {items.length > 100 && <Pagination />}
       </Row>
     )
   }

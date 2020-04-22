@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 export default class LabeledForm extends Component {
   render() {
+    const { label } = this.props
     return (
       <div className="card" style={{
         backgroundColor: '#f3f3f34d',
@@ -14,7 +15,10 @@ export default class LabeledForm extends Component {
         margin: 10,
         borderRadius: 20
       }}>
-        { this.props.children }
+        <fieldset>
+          <legend>{label}</legend>
+          { this.props.children }
+        </fieldset>
       </div>
     )
   }

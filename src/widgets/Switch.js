@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import Text from './Text'
 
 export default class Switch extends Component {
@@ -13,7 +13,7 @@ export default class Switch extends Component {
 
         <input type="checkbox" id="scales" name="scales" checked={checked} onChange={(ev) => {
           const exclude = !ev.target.checked
-
+          onChecked(exclude)
         }} />
         <Text style={{
           fontWeight: 'bold',
