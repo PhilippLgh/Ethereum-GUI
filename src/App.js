@@ -103,7 +103,8 @@ class App extends Component {
         flexDirection: 'column',
         height: '100vh',
         backgroundColor: theme.backgroundColor,
-        fontFamily: `'Roboto', sans-serif`
+        fontFamily: `'Roboto', sans-serif`,
+        overflow: 'hidden'
       }} >
         <Row style={{ padding: 3, fontSize: '1.0rem' }}>
           <span style={{ color: '#939393' }}>Ethereum GUI v1.0.0</span>
