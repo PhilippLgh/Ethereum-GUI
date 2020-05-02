@@ -1,3 +1,4 @@
+import { getObjectStore } from './Storage'
 
 export class DataProvider {
   constructor(provider) {
@@ -37,10 +38,23 @@ export class DataProvider {
     }
     return transactions
   }
-  getAllTxByContract = async (contractAddress) => {
-    const allTx = await this.getAllTransactions()
-    const contractTx = allTx.filter(tx => tx.to === contractAddress || tx.creates === contractAddress)
-    return contractTx
+  getAllTxByContract = async (contractAddress, skipCache=false) => {
+    const network = await this.provider.getNetwork()
+    const supported_networks = ['homestead', 'kovan', 'ropsten', 'rinkeby', 'goerli']
+    if (supported_networks.includes(network.name)) {
+      const store = await getObjectStore('transactions', network.chainId)
+      let contractTransactions = await store.get(contractAddress, network.chainId)
+      // cache miss
+      if (!contractTransactions || skipCache) {
+        contractTransactions = await this.provider.getHistory(contractAddress)
+        await store.put(contractAddress, contractTransactions)
+      }
+      return contractTransactions || []
+    } else {
+      const allTx = await this.getAllTransactions()
+      const contractTx = allTx.filter(tx => tx.to === contractAddress || tx.creates === contractAddress)
+      return contractTx
+    }
   }
   getAllContracts = async () => {
     const transactions = await this.getAllTransactions()

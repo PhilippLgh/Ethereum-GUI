@@ -1,28 +1,35 @@
+import * as idb from 'idb'
+
+export const getObjectStore = async (storeName, networkId = '1', dbName = 'ethui-db', version = 1) => {
+  dbName = `${dbName}_${networkId}`
+  const db = await idb.openDB(dbName, version, {
+    upgrade(db, oldVersion, newVersion, transaction) {
+      console.log('upgrade called')
+      const store = db.createObjectStore('transactions')
+    }
+  })
+  console.log('db ready', db)
+  return {
+    put: async (key, val) => {
+      const tx = db.transaction(storeName, 'readwrite')
+      const store = await tx.objectStore(storeName)
+      const value = await store.put(val, key)
+      await tx.done
+      return value
+    },
+    get: async (key) => {
+      const tx = db.transaction(storeName, 'readwrite')
+      const store = await tx.objectStore(storeName)
+      return store.get(key)
+    }
+  }
+}
+
 export default class Storage {
   static instance;
   cache = {}
   constructor() {
     this.indexedDB = window.indexedDB
-  }
-  static async getInstance() {
-    if(!Storage.instance) {
-      Storage.instance = new Storage()
-      // await Storage.instance.open()
-    }
-    return Storage.instance
-  }
-  async open() { 
-    const dbVersion = 1;
-    const request = indexedDB.open("ethGUI", dbVersion);
-    return this.waitRequest(request)
-  }
-  waitRequest(request) {
-    return new Promise((resolve, reject) => {
-      request.onsuccess = function (event) {
-        console.log('storage opened')
-        resolve(event)
-      }
-    })
   }
   _makeKey(data) {
     // var crypto = require('crypto');

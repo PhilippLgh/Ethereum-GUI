@@ -16,10 +16,12 @@ class ContractDetails extends Component {
     abi: undefined,
     bytecode: '',
     contractProxy: undefined, // instance of "metaclass"
+    contractInterface: undefined,
     signer: undefined,
     signerAddress: undefined,
     transactions: [],
-    selectedTx: undefined
+    selectedTx: undefined,
+    isLoadingTransactions: false
   }
   getAddress() {
     const { match } = this.props
@@ -27,19 +29,47 @@ class ContractDetails extends Component {
     const { address } = params
     return address
   }
+  getNetwork() {
+    const { match } = this.props
+    const { params } = match
+    const { network } = params
+    return network === 'main' ? 'homestead' : network
+  }
+  isPublicNetwork() {
+    const network = this.getNetwork()
+    const supported_networks = ['homestead', 'kovan', 'ropsten', 'rinkeby', 'goerli']
+    const isPublicNetwork = supported_networks.includes(network)
+    return isPublicNetwork
+  }
   getProvider() {
     const { global } = this.props
     const { state: globalState } = global
     const { provider } = globalState
+
+    //TODO fix  experimental
+    if (this.isPublicNetwork()) {
+      return new ethers.getDefaultProvider(this.getNetwork())
+    }
+
     return provider
   }
   componentDidMount = async () => {
-    const provider = this.getProvider()
-    this.loadContractTransactions(provider)
-    this.loadActiveSigner(provider)
-    try {
-      provider.on('block', this.loadContractTransactions)
-    } catch (error) { }
+
+    const isPublic = this.isPublicNetwork()
+
+    // we use etherscan provider to fetch tx history if connected to public network
+    let txProvider =  isPublic ? new ethers.providers.EtherscanProvider(this.getNetwork()) : this.getProvider()
+
+    if (!isPublic) {
+      try {
+        // TODO in dev mode with auto-mining
+        txProvider.on('block', () => this.loadContractTransactions(txProvider))
+      } catch (error) { }
+    }
+  
+    this.loadContractTransactions(txProvider)
+    this.loadActiveSigner()
+
   }
   componentWillUnmount = () => {
     const provider = this.getProvider()
@@ -47,15 +77,19 @@ class ContractDetails extends Component {
       provider.off('block', this.loadContractTransactions)
     } catch (error) { }
   }
-  loadContractTransactions = async () => {
-    const provider = this.getProvider()
+  loadContractTransactions = async (provider) => {
+    provider = provider || this.getProvider()
     try {
-      const transactions = await getDataProvider(provider).getAllTxByContract(this.getAddress())
+      this.setState({ isLoadingTransactions: true })
+      const skipCache = false
+      const transactions = await getDataProvider(provider).getAllTxByContract(this.getAddress(), skipCache)
       this.setState({
+        isLoadingTransactions: false,
         transactions,
         selectedTx: transactions[transactions.length - 1]
       })
     } catch (error) {
+      console.log('error while fetching contract transactions', error)
       this.setState({
         transactions: [],
         selectedTx: undefined
@@ -63,6 +97,7 @@ class ContractDetails extends Component {
     }
   }
   loadActiveSigner = async (provider) => {
+    provider = provider || this.getProvider()
     try {
       const signer = await provider.getSigner()
       const signerAddress = await signer.getAddress()
@@ -83,6 +118,7 @@ class ContractDetails extends Component {
     })
   }
   handleSolcArtifacts = async (data, persist = false) => {
+    console.log('handle new artifacts', data)
     const { abi, source, bytecode, ast } = data
     this.setState({
       source,
@@ -90,13 +126,25 @@ class ContractDetails extends Component {
       bytecode,
       ast
     })
+
     try {
-      const { signer } = this.state
-      const provider = this.getProvider()
-      let contractProxy = new ethers.Contract(this.getAddress(), abi, signer || provider);
+      const contractInterface = new ethers.utils.Interface(abi)
       this.setState({
-        contractProxy
+        contractInterface
       })
+      console.log('contract interface ready' /*, contractInterface*/)
+    } catch (error) {
+
+    }
+    try {
+      let { signer } = this.state
+      const provider = this.getProvider()
+      signer = signer || provider
+      const contractProxy = new ethers.Contract(this.getAddress(), abi, signer);
+      this.setState({
+        contractProxy,
+      })
+      // console.log('created proxy from abi', abi)
     } catch (error) {
       console.warn('could not create contract proxy', error)
     }
@@ -105,7 +153,7 @@ class ContractDetails extends Component {
     const address = this.getAddress()
     const provider = this.getProvider()
     // required for console
-    const { contractProxy, signerAddress, selectedTx } = this.state
+    const { contractProxy, contractInterface, signerAddress, selectedTx, isLoadingTransactions } = this.state
     // for tx browser
     const { transactions } = this.state
     return (
@@ -133,26 +181,25 @@ class ContractDetails extends Component {
               flex: 1,
               display: 'flex'
             }}>
-              {provider &&
-                <ContractCode
-                  provider={provider}
-                  address={address}
-                  // called when solidity artifacts become available:
-                  // either through compilation, user selection or database
-                  onData={data => this.handleSolcArtifacts(data, true)}
-                />
-              }
+              <ContractCode
+                provider={provider}
+                address={address}
+                // called when solidity artifacts become available:
+                // either through compilation, user selection or database
+                onData={data => this.handleSolcArtifacts(data, true)}
+              />
             </div>
             <div style={{
               flex: 1,
               display: 'flex',
+              marginTop: 3
             }}>
               <ContractTransactionBrowser
-                provider={provider}
+                // provider={provider}
                 transactions={transactions}
-                selectedTransaction={selectedTx}
+                isLoading={isLoadingTransactions}
                 onSelect={this.handleSelectedTransaction}
-                contractInterface={contractProxy} // used to decode tx
+                contractInterface={contractInterface} // used to decode tx
               />
             </div>
           </Row>
