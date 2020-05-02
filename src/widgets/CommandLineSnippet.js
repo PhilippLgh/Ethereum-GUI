@@ -7,17 +7,20 @@ export default class CommandLineSnippet extends Component {
     return (
       <div style={{
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
       }}>
         <pre style={{
-          backgroundColor: '#313131',
+          backgroundColor: '#313131dd',
+          flex: 1,
           color: 'white',
-          padding: 10,
-          paddingTop: 15,
-          marginRight: 10,
+          padding: 5,
+          paddingLeft: 10,
+          paddingRight: 10,
           borderRadius: 5,
+          paddingTop: 10,
           fontSize: '1.2rem',
-          overflow: 'scroll'
+          margin: 0,
+          marginRight: 10
         }}>$ {command}</pre> <CopyClipboardButton value={command} />
       </div>
     )

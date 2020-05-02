@@ -14,7 +14,7 @@ class Container extends Component {
         flexDirection: 'column',
         padding: 10,
         maxHeight: '100%',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         backgroundColor: theme.container.backgroundColor,
         color: theme.container.color,
         margin: 10,

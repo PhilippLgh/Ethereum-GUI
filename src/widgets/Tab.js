@@ -6,7 +6,12 @@ export default class Tab extends Component {
     return (
       <div 
         className="Tab"
-        style={{ display: 'flex', flex: 1, ...style }}
+        style={{ 
+          display: 'flex', 
+          flex: 1, 
+          overflow: 'auto',
+          ...style 
+        }}
       >{children}</div>
     )
   }

@@ -12,9 +12,10 @@ export default class Form extends Component {
         padding: 20,
         border: '1px solid gray',
         borderRadius: 10,
+        overflow: 'auto',
         ...style
       }}>
-        {this.props.children}
+        {this.props.children.map((c, idx) => <div key={idx} style={{ margin: 10}}>{c}</div>)}
       </div>
     )
   }

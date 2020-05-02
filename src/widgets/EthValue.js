@@ -11,10 +11,16 @@ const prices = {
 // TODO  move to utils
 const weiTo = (wei, selectedCurrency) => {
   const price = prices[selectedCurrency]
-  const etherString= ethers.utils.formatEther(wei, { commify: 2})
+  const etherString= ethers.utils.formatEther(wei)
+  const idx = etherString.indexOf('.')
+  const decimals = etherString.length - 1 - idx
   // FIXME dangerous but bigNumberify('100.00') not working
   const _ethers = parseFloat(etherString)
-  return (price * _ethers).toFixed(2)
+  if (selectedCurrency === 'eth') {
+    return (price * _ethers).toFixed(decimals)
+  } else {
+    return (price * _ethers).toFixed(2)
+  }
 }
 
 const weiToUnit = (wei, unit) => {

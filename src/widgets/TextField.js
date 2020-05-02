@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 
 export default class TextField extends Component {
   render() {
-    const { label, value, onChange, suffix, disabled=false, required=false } = this.props
+    const { label, value, onChange, suffix, disabled=false, required=false, style } = this.props
     return (
       <div style={{
         alignItems: 'center',
-        margin: 10
+        ...style
       }}>
         <label
           style={{
@@ -35,7 +35,7 @@ export default class TextField extends Component {
               margin: 0,
               padding: 10,
               font: 'inherit',
-              height: '1.2rem',
+              height: '1.4rem',
               border: '1px solid gray',
               borderRadius: 3
             }}
