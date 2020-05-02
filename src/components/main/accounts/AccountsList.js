@@ -14,6 +14,9 @@ export default class AccountsList extends Component {
     this.loadAccounts()
     */
   }
+  importAccount = async () => {
+    
+  }
   render() {
     return (
       <Connectivity>
@@ -22,8 +25,9 @@ export default class AccountsList extends Component {
             className="AccountList"
             elements={() => (
               <div>
-                <Button onClick={this.addAccount} >Add</Button>
-                <Button onClick={this.loadAccounts} >Refresh</Button>
+                <Button enabled={false} onClick={this.addAccount} >Add</Button>
+                <Button enabled={false} onClick={this.importAccount} >Import</Button>
+                <Button enabled={false} onClick={this.loadAccounts} >Refresh</Button>
               </div>
             )}
             itemName="accounts"
