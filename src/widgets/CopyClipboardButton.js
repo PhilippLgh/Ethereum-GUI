@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Clickable from './Clickable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaste } from '@fortawesome/free-solid-svg-icons'
+import { showNotification } from './Notification'
 
 
 export default class CopyClipboardButton extends Component {
@@ -10,7 +11,7 @@ export default class CopyClipboardButton extends Component {
     if (!value) { return }
     navigator.clipboard.writeText(value).then(function () {
       console.log('Async: Copying to clipboard was successful!');
-      alert('copied: '+value)
+      showNotification('copied: '+value)
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
       alert('failed to copy')

@@ -5,6 +5,7 @@ import Switch from '../../../widgets/Switch'
 import CompilerWorker from '../../../js/Compiler.worker'
 import { remote } from '../../../js/remote'
 import Button from '../../../widgets/Button'
+import { showNotification } from '../../../widgets/Notification'
 
 export default class Compiler extends Component {
   state = {
@@ -34,6 +35,7 @@ export default class Compiler extends Component {
         compiling: false,
         result
       })
+      showNotification('Compilation finished!', { type: 'success' })
       onData(result)
     } catch (error) {
       this.setState({
@@ -45,6 +47,7 @@ export default class Compiler extends Component {
   render() {
     const { source } = this.props
     const { compiling, compilerVersions, result } = this.state
+    const selectOptions = compilerVersions.map(version => ({ label: version, value: version }))
     return (
       <div>
         <Row style={{
@@ -55,7 +58,7 @@ export default class Compiler extends Component {
           justifyContent: 'normal',
           alignItems: 'flex-end'
         }}>
-          <Select label={"Compiler version:"} options={compilerVersions} />
+          <Select label={"Compiler version:"} options={selectOptions} />
           <Button 
             style={{
               marginLeft: 20,

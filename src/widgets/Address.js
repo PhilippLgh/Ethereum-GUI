@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Clickable from './Clickable'
 import Text from './Text'
 import { withGlobalState } from '../Context'
+import { showNotification } from './Notification'
 
 class Address extends Component {
   handleClick = () => {
@@ -9,7 +10,7 @@ class Address extends Component {
     // TODO handle not available
     navigator.clipboard.writeText(address).then(function () {
       console.log('Async: Copying to clipboard was successful!');
-      alert('copied')
+      showNotification('Copied: '+address)
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
       alert('failed to copy')
