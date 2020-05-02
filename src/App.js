@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { ethers, providers } from 'ethers';
 import {
-  HashRouter as Router,
+  withRouter,
 } from "react-router-dom"
 import TopNavigation from './components/navigation/TopNavigation';
 import StatusBar from './components/status/StatusBar';
@@ -11,6 +11,7 @@ import { Row } from './widgets/Row';
 import { withNewContext, withGlobalState } from './Context'
 import { useTheme } from './Theme';
 import Routes from './Routes';
+import Notification from './widgets/Notification';
 
 const createProvider = (selectedProvider, providers) => {
   const providerConfig = providers.find(p => p.name === selectedProvider)
@@ -32,7 +33,15 @@ class App extends Component {
     interval: undefined
   }
   componentDidMount = async () => {
-    this.tryConnect()
+    const { match } = this.props
+    const { params } = match
+    const { network } = params
+    console.log('app params', network)
+    if (network === 'main') {
+      // this.tryConnect()
+    } else {
+      this.tryConnect()
+    }
   }
   tryConnect = () => {
     let { interval } = this.state
@@ -89,32 +98,31 @@ class App extends Component {
 
     // TODO allows workflow to be part of url so that a link to a contract e.g. includes the infrastructure info
     return (
-      <Router>
-        <div className="App" style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100vh',
-          backgroundColor: theme.backgroundColor,
-          fontFamily: `'Roboto', sans-serif`
-        }} >
-          <Row style={{ padding: 3, fontSize: '1.0rem' }}>
-            <span style={{ color: '#939393' }}>Ethereum GUI v1.0.0</span>
-            <span style={{ color: '#939393', marginRight: 10 }}>philipplgh.eth</span>
-          </Row>
-          <TopNavigation items={navItems} />
-          <StatusBar provider={provider} currentBlock={currentBlock} />
-          {error
-            ? <Error error={error} />
-            : (
-              <main>
-                <Routes provider={provider} currentBlock={currentBlock} />
-              </main>
-            )
-          }
-        </div>
-      </Router>
+      <div className="App" style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+        backgroundColor: theme.backgroundColor,
+        fontFamily: `'Roboto', sans-serif`
+      }} >
+        <Row style={{ padding: 3, fontSize: '1.0rem' }}>
+          <span style={{ color: '#939393' }}>Ethereum GUI v1.0.0</span>
+          <span style={{ color: '#939393', marginRight: 10 }}>philipplgh.eth</span>
+        </Row>
+        <TopNavigation items={navItems} />
+        <StatusBar provider={provider} currentBlock={currentBlock} />
+        {error
+          ? <Error error={error} />
+          : (
+            <main>
+              <Notification />
+              <Routes provider={provider} currentBlock={currentBlock} />
+            </main>
+          )
+        }
+      </div>
     );
   }
 }
 
-export default withNewContext(withGlobalState(App))
+export default withNewContext(withGlobalState(withRouter(App)))

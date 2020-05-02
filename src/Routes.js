@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Switch,
+  Switch, useRouteMatch,
 } from "react-router-dom"
 
 import BlockList from './components/main/blocks/BlockList';
@@ -24,27 +24,39 @@ import Workflows from './components/main/workflows/Workflows';
 import WorkflowDetails from './components/main/workflows/WorkflowDetails';
 import JobDetails from './components/main/workflows/JobDetails';
 import AppliedRoute from './AppliedRoute';
+import Tokens from './components/main/tokens/Tokens';
+import TokenDetails from './components/main/tokens/TokenDetails';
 
-export default ({ provider, currentBlock }) =>
-  <Switch>
-    <AppliedRoute path="/accounts/:address" component={AccountDetails} props={{ provider }}  />
-    <AppliedRoute path="/" exact component={AccountsList} />
-    <AppliedRoute path="/accounts" component={AccountsList} />
-    <AppliedRoute path="/addresses" component={AddressList} />
-    <AppliedRoute path="/blocks/:blockNumber" component={BlockDetails} props={{ provider }} />
-    <AppliedRoute path="/blocks" component={BlockList} props={{ start: 0, end: currentBlock }} />
-    <AppliedRoute path="/transactions/new/:to" component={SendTransaction} key={provider ? provider.createdAt : 'not_set'} props={{ provider }} />
-    <AppliedRoute path="/transactions/:txHash" component={TransactionDetails}  />
-    <AppliedRoute path="/transactions" component={TransactionList} props={{ blockNumber: currentBlock }} />
-    <AppliedRoute path="/contracts/new" component={CreateContractView} props={{ provider }} />
-    <AppliedRoute path="/contracts/:address" component={ContractDetails} key={provider ? provider.createdAt : 'not_set'}  />
-    <AppliedRoute path="/contracts" component={Contracts} />
-    <AppliedRoute path="/network" component={Network} props={{ provider }} />
-    <AppliedRoute path="/client" component={Client} key={provider ? provider.createdAt : 'not_set'} props={{ provider }} />
-    <AppliedRoute path="/workflows/jobs/:jobId" component={JobDetails} props={{ provider }} />
-    <AppliedRoute path="/workflows/:workflowId" component={WorkflowDetails} props={{ provider }} />
-    <AppliedRoute path="/workflows" component={Workflows} props={{ provider }} />
-    <AppliedRoute path="/scripts" component={ScriptList} props={{ provider }} />
-    {/* <AppliedRoute path="/tools" component={Tools} props={{ provider }} /> */ }
-    <AppliedRoute path="/settings" component={Settings} props={{ provider }} />
-  </Switch>
+export default ({ provider, currentBlock }) => {
+  let match = useRouteMatch();
+  let prefix = match.url
+  if (!['/main'].includes(prefix)) {
+    prefix = ''
+  }
+  return (
+    <Switch>
+      <AppliedRoute path={`${prefix}/accounts/:address`} component={AccountDetails} props={{ provider }} />
+      <AppliedRoute path={`${prefix}/`} exact component={AccountsList} />
+      <AppliedRoute path={`${prefix}/accounts`} component={AccountsList} />
+      <AppliedRoute path={`${prefix}/addresses`} component={AddressList} />
+      <AppliedRoute path="/blocks/:blockNumber" component={BlockDetails} props={{ provider }} />
+      <AppliedRoute path="/blocks" component={BlockList} props={{ start: 0, end: currentBlock }} />
+      <AppliedRoute path="/transactions/new/:to" component={SendTransaction} key={provider ? provider.createdAt : 'not_set'} props={{ provider }} />
+      <AppliedRoute path="/transactions/:txHash" component={TransactionDetails} />
+      <AppliedRoute path="/transactions" component={TransactionList} props={{ blockNumber: currentBlock }} />
+      <AppliedRoute path="/contracts/new" component={CreateContractView} props={{ provider }} />
+      <AppliedRoute path={`${prefix}/contracts/:address`} component={ContractDetails} key={provider ? provider.createdAt : 'not_set'} />
+      <AppliedRoute path={`${prefix}/contracts`} component={Contracts} />
+      <AppliedRoute path={`${prefix}/tokens/:address`} component={TokenDetails} />
+      <AppliedRoute path={`${prefix}/tokens`} component={Tokens} />
+      <AppliedRoute path="/network" component={Network} props={{ provider }} />
+      <AppliedRoute path="/client" component={Client} key={provider ? provider.createdAt : 'not_set'} props={{ provider }} />
+      <AppliedRoute path="/workflows/jobs/:jobId" component={JobDetails} props={{ provider }} />
+      <AppliedRoute path="/workflows/:workflowId" component={WorkflowDetails} props={{ provider }} />
+      <AppliedRoute path="/workflows" component={Workflows} props={{ provider }} />
+      <AppliedRoute path="/scripts" component={ScriptList} props={{ provider }} />
+      <AppliedRoute path="/tools" component={Tools} props={{ provider }} />
+      <AppliedRoute path="/settings" component={Settings} props={{ provider }} />
+    </Switch>
+  )
+}

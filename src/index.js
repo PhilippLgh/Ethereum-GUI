@@ -5,12 +5,19 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Resizable from './widgets/Resizable'
 import Nano from './components/nano/Nano';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 function Responsive({ width = window.innerWidth }) {
   return (
     (width <= 320)
-    ? <Nano />
-    : <App />
+      ? <Nano />
+      : <Router>
+        <Switch>
+          <Route path="/:network?">
+            <App />
+          </Route>
+        </Switch>
+      </Router>
   )
 }
 
