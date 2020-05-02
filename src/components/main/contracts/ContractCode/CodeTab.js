@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import FileChooser from '../../../../widgets/FileChooser'
 import Tab from '../../../../widgets/Tab'
 import JsonTreeView from './JsonTreeView'
+import CodeEditor from '../../../../widgets/CodeEditor'
 
 export default class CodeTab extends Component {
   state = {
@@ -59,13 +60,14 @@ export default class CodeTab extends Component {
         }}>
           {label === 'AST'
             ? <JsonTreeView data={source} />
-            : <textarea
+            : <CodeEditor
               readOnly={false}
+              language="text"
               style={{
                 backgroundColor: hasFocus ? 'transparent' : '#cacaca17',
                 flex: 1
               }}
-              value={value}
+              source={value}
               onChange={this.handleChange}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
