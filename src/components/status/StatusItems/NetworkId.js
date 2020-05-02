@@ -11,7 +11,6 @@ class Network extends Component {
     const { provider } = this.props
     try {
       const network = await provider.getNetwork() 
-      console.log('network', network)
       const { chainId: networkId, name: networkName } = network
       this.setState({
         networkId,
