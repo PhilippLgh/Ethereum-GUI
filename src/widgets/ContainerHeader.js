@@ -4,14 +4,14 @@ import BackButton from './BackButton'
 
 export default class ContainerHeader extends Component {
   render() {
-    const { title } = this.props
+    const { title, backButton=true } = this.props
     return (
       <Row style={{
         justifyContent: 'space-between',
         alignItems: 'center',
         ...this.props.style
       }}>
-        <BackButton />
+        {backButton ? <BackButton /> : <div></div> }
         <span style={{
           fontSize: '1.35rem',
           color: '#666',

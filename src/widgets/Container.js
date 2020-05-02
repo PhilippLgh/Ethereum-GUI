@@ -5,7 +5,7 @@ import ContainerHeader from './ContainerHeader'
 
 class Container extends Component {
   render() {
-    const { style = {}, global, header, isCard=true } = this.props
+    const { style = {}, global, header, isCard=true, backButton=true } = this.props
     const theme = useTheme(global)
     return (
       <div className={isCard ? 'card' : ''} style={{
@@ -21,7 +21,7 @@ class Container extends Component {
         borderRadius: 10,
         ...style
       }}>
-        { header && <ContainerHeader style={this.props.headerStyle} title={header} /> }
+        { header && <ContainerHeader style={this.props.headerStyle} title={header} backButton={backButton} /> }
         { this.props.children }
       </div>
     )
