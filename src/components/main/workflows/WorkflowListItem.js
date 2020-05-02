@@ -13,27 +13,36 @@ export default class WorkflowListItem extends Component {
     const {
       projectId,
       version,
+      workflowId,
       // created_at,
       updated_at,
       displayName,
       shortDescription,
-      publisher
+      publisher, 
     } = workflow
-    const { name: publisherName, address } = publisher
+
+    // hosted workflow
+    let {
+      releaseId = ''
+    } = workflow
+    // url-friendly
+    releaseId = releaseId.split('@')[0].replace('/', '-')
+
+    const { name: publisherName, address } = publisher || {}
     // TODO support tags
     const hasTags = false
     return (
-      <ListItem to={`/workflows/${projectId}`}>
+      <ListItem to={`/workflows/${releaseId || workflowId}`}>
         <Column>
-          <Row>
+          <Row style={{ alignItems: 'center', padding: 5 }}>
             <Button
               icon="Play"
               iconColor="#08a79c"
               label=""
               onClick={() => this.props.onRunWorkflow(workflow)}
             />
-            <Column>
-              <Row style={{ marginBottom: 5 }}>
+            <Column style={{ marginLeft: 5}}>
+              <Row style={{ marginBottom: 10 }}>
                 <div style={{
                   margin: 5,
                   display: 'flex',

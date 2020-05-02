@@ -223,14 +223,18 @@ class WorkflowDetails extends Component {
         style={{
           borderRadius: 0,
           maxHeight: '100%',
-          overflowY: 'hidden'
         }}
         header={() => (<Fragment>Workflow details: "{workflowId}"</Fragment>)}
         headerStyle={{
           margin: 10
         }}
       >
-    
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+
         { this.renderWorkflowInfo()}
 
         { /* TODO DISPLAY JOBS for this workflow */ }
@@ -268,6 +272,8 @@ class WorkflowDetails extends Component {
           </Tab>
           }
         </Tabs>
+        </div>
+
       </Container>
     )
   }

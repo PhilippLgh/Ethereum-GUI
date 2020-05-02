@@ -7,10 +7,27 @@ import Tab from '../../../widgets/Tab'
 import WorkflowListItem from './WorkflowListItem'
 import JobListItem from './JobListItem'
 import List from '../../../widgets/List'
+import { withRouter } from 'react-router-dom'
 
-export default class Workflows extends Component {
-  handleRunWorkflow = (workflow) => {
-    GridAPI.runWorkflow(workflow.releaseId)
+class Workflows extends Component {
+  state = {
+    selectedTab: 0
+  }
+  handleRunWorkflow = async (workflow) => {
+    const isConnected = true
+    if (isConnected) {
+      try {
+        const job = await GridAPI.runWorkflow(workflow.releaseId || workflow.workflowId)
+        // this.setState({ selectedTab: 1 })
+        this.props.history.push(`/workflows/jobs/${job.id.replace('jobId:','')}`)
+      } catch (error) {
+        alert('error: '+error.message)
+      }
+
+
+    } else {
+      alert('This functionality requires Grid')
+    }
   }
   renderGridRequired = () => {
     return (
@@ -27,22 +44,30 @@ export default class Workflows extends Component {
     )
   }
   renderTabs = () => {
+    const { selectedTab } = this.state
+    // const loadItems = () => GridAPI.getWorkflows()
+    const loadItems = () => GridAPI.searchWorkflows()
     return (
-      <Tabs style={{
-        fontSize: '1.25rem',
-        padding: 7,
-        marginBottom: 10 
-      }}>
+      <Tabs
+        style={{
+          fontSize: '1.25rem',
+          padding: 7,
+          marginBottom: 10,
+        }}
+        selectedTab={selectedTab}
+        onChange={idx => this.setState({ selectedTab: idx })}
+      >
         <Tab label="Workflows" key="1">
           <List
             header={false}
-            loadItems={() => GridAPI.searchWorkflows()}
+            loadItems={loadItems}
             itemName="workflows"
             renderItem={workflow => <WorkflowListItem key={workflow.name} workflow={workflow} onRunWorkflow={this.handleRunWorkflow} />}
           />
         </Tab>
         <Tab label="Jobs" key="2">
           <List
+            header={false}
             loadItems={() => GridAPI.getJobs()}
             itemName="jobs"
             polling={5 * 1000}
@@ -54,7 +79,7 @@ export default class Workflows extends Component {
   }
   render() {
     const inNano = true
-    const isGridConnected = false
+    const isGridConnected = true
     return (
       <Container
         isCard={inNano ? false : true}
@@ -63,10 +88,12 @@ export default class Workflows extends Component {
         }}
       >
         {isGridConnected
-        ? this.renderTabs()
-        : this.renderGridRequired()
+          ? this.renderTabs()
+          : this.renderGridRequired()
         }
       </Container>
     )
   }
 }
+
+export default withRouter(Workflows)
