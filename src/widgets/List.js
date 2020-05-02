@@ -122,6 +122,7 @@ export default class List extends Component {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
+        ...style
       }}>
         {items.length > 0
           ? items.map(renderItem)

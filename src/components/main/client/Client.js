@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Container from '../../../widgets/Container'
 import CommandLineSnippet from '../../../widgets/CommandLineSnippet'
 import { withGlobalState } from '../../../Context'
+import Grid from '../grid/Grid'
 
 class Client extends Component {
   state = {}
@@ -20,12 +21,14 @@ class Client extends Component {
     const { provider } = this.props
     const { clientInfo } = this.state
     return (
-      <div>
-        <h2>Client info:</h2>
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         <pre>
           {JSON.stringify(clientInfo, null, 2)}
         </pre>
-        {/* <Grid /> */ }
         {/* <SyncState provider={provider} /> */}
       </div>
     )
@@ -37,7 +40,6 @@ class Client extends Component {
     const command = './geth --dev --rpc --rpccorsdomain="*" --rpcapi "eth,web3,personal,net,debug" --allow-insecure-unlock'
     return (
       <div style={{
-        height: 200,
         border: '2px solid #ff9245',
         borderRadius: 20,
         padding: 30,
@@ -52,15 +54,16 @@ class Client extends Component {
     )
   }
   render() {
+    const { clientInfo } = this.state
     const { global } = this.props
     const { state: globalState } = global
     const { isConnected } = globalState
     return (
       <Container>
-        {isConnected
-          ? this.renderClientInfo()
-          : this.renderHowTo()
-        }
+        <h2>Client info</h2>
+        {!isConnected && this.renderHowTo() }
+        { false && this.renderClientInfo() }
+        <Grid />
       </Container>
     )
   }

@@ -60,7 +60,7 @@ export default class JsonView extends Component {
     let varName = this.flattenedMeta[newPath] || ''
 
     const renderers = {
-      'string': val => val,
+      'string': val => `"${val}"`,
       'number': val => val,
       'boolean': val => val ? 'true' : 'false',
       'address': val => <span><Address address={val} /></span>,

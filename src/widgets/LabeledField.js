@@ -16,8 +16,13 @@ export const LabeledField = withGlobalState(({ children, label, value, valueEl, 
         fontSize: '0.8rem', 
         color: theme.field.label.color,
         alignSelf: alignValue,
+        paddingBottom: 5
       }}>
-        <Text>{label}</Text>
+        {
+          typeof label === 'function'
+          ? label()
+          : <Text>{label}</Text>
+        }
       </div>
       <div style={{
         color: theme.field.value.color,

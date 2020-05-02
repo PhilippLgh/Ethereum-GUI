@@ -56,7 +56,7 @@ class Tools extends Component {
     const { match } = this.props
     const { path } = match
     const tools = [
-      { name: 'ethpkg', to: `${path}/ethpkg` }
+      // { name: 'ethpkg', to: `${path}/ethpkg` }
       , { name: 'trie', to: `${path}/trie` }
     ]
     return (
@@ -75,7 +75,8 @@ class Tools extends Component {
         <h2>Tools</h2>
         {this.renderOverview()}
         <div style={{
-          flex: 5
+          flex: 5,
+          display: 'flex'
         }}>
           <Switch>
             <Route exact path={path}>

@@ -2,6 +2,11 @@ const dark = {
   primaryBackground: '#292929'
 }
 
+// #F4F7F7 - gray cold
+// #FBFAFC - gray warm
+// #353E3E - console bg dark
+// #D8DEDD - console fg 
+
 // TODO consider simplification to foreground & background
 export const Themes = {
   light: {

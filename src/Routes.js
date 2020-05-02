@@ -45,7 +45,7 @@ export default ({ provider, currentBlock }) => {
       <AppliedRoute path="/transactions/:txHash" component={TransactionDetails} />
       <AppliedRoute path="/transactions" component={TransactionList} props={{ blockNumber: currentBlock }} />
       <AppliedRoute path="/contracts/new" component={CreateContractView} props={{ provider }} />
-      <AppliedRoute path={`${prefix}/contracts/:address`} component={ContractDetails} key={provider ? provider.createdAt : 'not_set'} />
+      <AppliedRoute path={`/:network?/contracts/:address`} component={ContractDetails} key={provider ? provider.createdAt : 'not_set'} />
       <AppliedRoute path={`${prefix}/contracts`} component={Contracts} />
       <AppliedRoute path={`${prefix}/tokens/:address`} component={TokenDetails} />
       <AppliedRoute path={`${prefix}/tokens`} component={Tokens} />
