@@ -4,9 +4,11 @@ import Tabs from '../../../../widgets/Tabs'
 import { getCompilerData } from '../../../../js/utils'
 import Compiler from '../Compiler'
 import CodeTab from './CodeTab'
+import { showNotification } from '../../../../widgets/Notification'
 
 export default class ContractCode extends Component {
   state = {
+    selectedTab: 0,
     code: '',
     abi: '',
     bytecode: '',
@@ -18,17 +20,48 @@ export default class ContractCode extends Component {
     if (!address) {
       return
     }
-    this.loadArtifacts()
+    this.loadArtifacts(address)
   }
-  loadArtifacts = async () => {
-    const { provider, address } = this.props
-    const contractCode = await provider.getCode(address)
-    this.setState({ contractCode })
-    // try to fetch compiler info based on contract code
-    const solcArtifacts = await getCompilerData(contractCode)
-    if (solcArtifacts) {
-      this.handleSolcArtifacts(solcArtifacts, false)
+  tryLoadAbiFromEtherscan = async (contractAddress) => {
+    const abi = await fetch(`http://api.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}`)
+                  .then(data => data.json())
+                  .then(data => JSON.parse(data.result))
+                  .catch(error => console.log('fetch error', error))
+    console.log('abi?', abi)              
+    if (abi) {
+      this.handleSolcArtifacts({
+        abi
+      })
+      this.setState({
+        // if no source to display but abi -> go to abi tab
+        selectedTab: 3
+      })
+      showNotification('Found ABI on Etherscan!')
+      return true
     }
+    return false
+  }
+  loadArtifacts = async (contractAddress) => {
+    console.log('load artifacts', contractAddress)
+
+    await this.tryLoadAbiFromEtherscan(contractAddress)
+
+    // const data = loadContractArtifacts()
+
+    /*
+    try {
+      const { provider, address } = this.props
+      const contractCode = await provider.getCode(address)
+      this.setState({ contractCode })
+      // try to fetch compiler info based on contract code
+      const solcArtifacts = await getCompilerData(contractCode)
+      if (solcArtifacts) {
+        this.handleSolcArtifacts(solcArtifacts, false)
+      }
+    } catch (error) {
+      
+    }
+    */
   }
   handleCompilerData = (output) => {
     const { source } = this.state
@@ -78,7 +111,7 @@ export default class ContractCode extends Component {
     )
   }
   render() {
-    const { bytecodeMatch, source } = this.state
+    const { bytecodeMatch, source, selectedTab } = this.state
     const { compiler } = this.props
 
     const tabs = [
@@ -93,14 +126,16 @@ export default class ContractCode extends Component {
       <div
         className="ContractCode"
         style={{
-          margin: 10,
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
           ...this.props.style
         }}>
         { compiler === 'top' && <Compiler source={source} onData={this.handleCompilerData} /> }
-        <Tabs>
+        <Tabs
+          selectedTab={selectedTab}
+          onChange={tab => this.setState({ selectedTab: tab })}
+        >
           {tabs.map(t => <CodeTab 
             key={t.label} 
             label={t.label} 

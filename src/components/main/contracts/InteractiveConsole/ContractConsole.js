@@ -20,6 +20,7 @@ export default class ContractConsole extends Component {
         position: 'relative',
         flex: 1,
         display: 'flex',
+        backgroundColor: '#000000e0',
       }}>
         <div style={{
           flex: 1,
@@ -27,25 +28,33 @@ export default class ContractConsole extends Component {
           flexDirection: 'column',
         }}>
           <Row style={{
-            backgroundColor: '#000000e0',
             color: 'white',
             padding: 5,
           }}>
             <span>State at: {selectedTx && <BlockTime block={selectedTx.blockNumber} style={{ padding: 0 }} />}</span>
-            <span>Signer: <Address address={signerAddress} style={{ padding: 2 }} /></span>
+            <span>Signer: { signerAddress
+             ? <Address address={signerAddress} style={{ padding: 2 }} />
+             : <span style={{ color: 'yellow' }} tooltip="Metamask login required?">WARNING: read-only</span>
+            }
+            </span>
           </Row>
           <div style={{
             flex: 2,
             display: 'flex'
           }}>
-            <ContractState
-              key={selectedTx ? selectedTx.hash : '_'}
-              provider={provider}
-              contractAddress={contractAddress}
-              // ast={ast}
-              transactions={transactions}
-              until={selectedTx}
-            />
+            {transactions.length > 10
+            ? <span style={{ color: '#6e6e6e', fontSize: '1.4rem', alignSelf: 'center', margin: 'auto'}}>Too many transactions for state debugger (max: 10)</span>
+            : (
+              <ContractState
+                key={selectedTx ? selectedTx.hash : '_'}
+                provider={provider}
+                contractAddress={contractAddress}
+                // ast={ast}
+                transactions={transactions}
+                until={selectedTx}
+              />
+            )
+            } 
           </div>
           <div style={{
             flex: 3,

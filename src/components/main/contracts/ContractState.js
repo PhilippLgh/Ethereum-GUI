@@ -74,6 +74,7 @@ export default class ContractState extends Component {
         </Row>
         <div style={{
           position: 'relative',
+          display: 'flex',
           flex: 1
         }}>
           { this.renderJson(jsonState) }

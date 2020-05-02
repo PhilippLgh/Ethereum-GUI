@@ -21,15 +21,23 @@ export default class Contracts extends Component {
     // from another chain at a given block / state
     // can be auto-synced downstream
   }
+  loadContracts = async (provider) => {
+    // in a dev environment we want to load all contracts
+    // on public testnet this should only load bookmarked contracts
+    return getDataProvider(provider).getAllContracts()
+  }
   render() {
     const { showPrompt } = this.state
     return (
       <Connectivity>
-        <Container>
+        <Container
+          header="All Contracts"
+          backButton={false}
+        >
           <ProviderList
             elements={() => (
               <div>
-                <NavButton to={'/contracts/new'} label="New" />
+                <NavButton icon="File" to={'/contracts/new'} label="New" />
                 {/*
                 <Button onClick={this.bookmarkContract} label="Bookmark" />
                 <Button onClick={this.importContract} label="Import" />
@@ -37,7 +45,7 @@ export default class Contracts extends Component {
               </div>
             )}
             itemName="contracts"
-            loadItems={provider => getDataProvider(provider).getAllContracts()}
+            loadItems={this.loadContracts}
             renderItem={({ provider, item: contract }) => <ContractListItem key={contract.contractAddress} provider={provider} contract={contract} />}
           />
           <Modal onClose={() => this.setState({ showPrompt: false })} show={showPrompt} />
