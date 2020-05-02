@@ -1,25 +1,28 @@
 {
   "files": {
     "main.css": "/ethereum-gui/static/css/main.952301f1.chunk.css",
-    "main.js": "/ethereum-gui/static/js/main.7795c3af.chunk.js",
-    "main.js.map": "/ethereum-gui/static/js/main.7795c3af.chunk.js.map",
+    "main.js": "/ethereum-gui/static/js/main.c8dd26a9.chunk.js",
+    "main.js.map": "/ethereum-gui/static/js/main.c8dd26a9.chunk.js.map",
     "runtime-main.js": "/ethereum-gui/static/js/runtime-main.dfe66ad8.js",
     "runtime-main.js.map": "/ethereum-gui/static/js/runtime-main.dfe66ad8.js.map",
-    "static/js/2.e5d2be9b.chunk.js": "/ethereum-gui/static/js/2.e5d2be9b.chunk.js",
-    "static/js/2.e5d2be9b.chunk.js.map": "/ethereum-gui/static/js/2.e5d2be9b.chunk.js.map",
+    "static/css/2.450c489e.chunk.css": "/ethereum-gui/static/css/2.450c489e.chunk.css",
+    "static/js/2.e319cb7b.chunk.js": "/ethereum-gui/static/js/2.e319cb7b.chunk.js",
+    "static/js/2.e319cb7b.chunk.js.map": "/ethereum-gui/static/js/2.e319cb7b.chunk.js.map",
     "a97412092dd0a8bc61b6.worker.js": "/ethereum-gui/a97412092dd0a8bc61b6.worker.js",
     "a97412092dd0a8bc61b6.worker.js.LICENSE.txt": "/ethereum-gui/a97412092dd0a8bc61b6.worker.js.LICENSE.txt",
     "a97412092dd0a8bc61b6.worker.js.map": "/ethereum-gui/a97412092dd0a8bc61b6.worker.js.map",
     "index.html": "/ethereum-gui/index.html",
-    "precache-manifest.2259595d3e4455af0940798680d462e6.js": "/ethereum-gui/precache-manifest.2259595d3e4455af0940798680d462e6.js",
+    "precache-manifest.dc291d89b3d0b7587295c79045423841.js": "/ethereum-gui/precache-manifest.dc291d89b3d0b7587295c79045423841.js",
     "service-worker.js": "/ethereum-gui/service-worker.js",
+    "static/css/2.450c489e.chunk.css.map": "/ethereum-gui/static/css/2.450c489e.chunk.css.map",
     "static/css/main.952301f1.chunk.css.map": "/ethereum-gui/static/css/main.952301f1.chunk.css.map",
-    "static/js/2.e5d2be9b.chunk.js.LICENSE.txt": "/ethereum-gui/static/js/2.e5d2be9b.chunk.js.LICENSE.txt"
+    "static/js/2.e319cb7b.chunk.js.LICENSE.txt": "/ethereum-gui/static/js/2.e319cb7b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.dfe66ad8.js",
-    "static/js/2.e5d2be9b.chunk.js",
+    "static/css/2.450c489e.chunk.css",
+    "static/js/2.e319cb7b.chunk.js",
     "static/css/main.952301f1.chunk.css",
-    "static/js/main.7795c3af.chunk.js"
+    "static/js/main.c8dd26a9.chunk.js"
   ]
 }
