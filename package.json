@@ -19,7 +19,7 @@
     "gh-pages": "^2.2.0",
     "idb": "^5.0.2",
     "merkle-patricia-tree": "^3.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
     "react-d3-tree": "^1.16.1",
